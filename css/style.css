@@ -1,0 +1,13 @@
+.boardGame {
+    display: grid;
+    grid-template-columns: repeat(4, 150px);
+    grid-template-rows: repeat(3, 150px);
+    gap: 5px;
+}
+.memoryCard {
+    height: 150px;
+    width: 150px;
+    /* background-image: url("/images/ressources1/memory-legume/1.svg"); */
+    border: solid black 1px;
+    background-size: cover;
+}
