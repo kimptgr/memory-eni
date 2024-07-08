@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE-edge" > 
+    <meta charset="UTF-8"> 
+    <meta author="Kim"> 
+    <meta name="description" content="Un TP "> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/script.js"></script>
+    <title>Inscription memory 🧠</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="./index.html">Accueil</a></li>
+            <li><a src="./inscription.html">Inscription</a></li>
+            <li><a src="./profil.html">Mon profil</a></li>
+            <li><a src="./connexion.html">Connexion</a></li>
+            <li><a src="./game.html">Jouer</a></li>
+        </ul>
+    </nav>
+    <h1>Inscrivez-vous</h1>
+<fieldset>
+    <form>
+        <label for="name">Nom d'utilisateur</label>
+        <input type="text" name="name" id="name">
+        <label for="mail">Entrez votre email</label>
+        <input type="email" name="mail" id="mail">
+        <label for="password">Mot de passe</label>
+        <input type="password" name="password" id="password" pattern="^^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" placeholder="Mot de passe...">
+        <label for="confirmPassword">Mot de passe</label>
+        <input type="password" name="confirmPassword" id="confirmPassword" pattern="^^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" placeholder="Mot de passe...">
+        <button> Création du compte</button>
+        <button href="./index.html">Annuler</button>
+    </form>
+</fieldset>
+</body>
+</html>
