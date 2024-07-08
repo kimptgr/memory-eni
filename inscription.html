@@ -15,10 +15,10 @@
     <nav>
         <ul>
             <li><a href="./index.html">Accueil</a></li>
-            <li><a src="./inscription.html">Inscription</a></li>
-            <li><a src="./profil.html">Mon profil</a></li>
-            <li><a src="./connexion.html">Connexion</a></li>
-            <li><a src="./game.html">Jouer</a></li>
+            <li><a href="./inscription.html">Inscription</a></li>
+            <li><a href="./profil.html">Mon profil</a></li>
+            <li><a href="./connexion.html">Connexion</a></li>
+            <li><a href="./game.html">Jouer</a></li>
         </ul>
     </nav>
     <h1>Inscrivez-vous</h1>
@@ -30,6 +30,7 @@
         <input type="email" name="mail" id="mail">
         <label for="password">Mot de passe</label>
         <input type="password" name="password" id="password" pattern="^^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" placeholder="Mot de passe...">
+        <progress id="strongPassword" max="100" value="0"></progress>
         <label for="confirmPassword">Mot de passe</label>
         <input type="password" name="confirmPassword" id="confirmPassword" pattern="^^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" placeholder="Mot de passe...">
         <button> Création du compte</button>
