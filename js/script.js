@@ -3,6 +3,7 @@ var cards ;
 var btnStart ;
 var nbShot ;
 var firstCardCliked ;
+var gagne = false ;
 
 
 function init(){
@@ -31,8 +32,10 @@ function playgame(){
         card.style.backgroundImage = "url(./images/ressources1/question.svg" ;
         card.style.order = getRandom(11) ;
         card.addEventListener("click", clickCard) ;
-    } )
-
+        card.classList.remove("visible") ;
+    }) ;
+    let h6 = document.querySelector("h6") ;
+    h6.innerText = "Nombre de coup joué : " + nbShot ;
     /* Le style à appliquer pour toute les cartes au même endroit
         card.style.position = "absolute" ;
         card.style.top = "0" ;
@@ -41,43 +44,53 @@ function playgame(){
         card.style.width = "20vmin" ; */
 }
 
+let card1, card2 ;
+let timeoutID1, timeoutID2 ;
+let cardVisible = 0 ;
+
 function clickCard(e){
-    let timeoutID1, timeoutID2 ;
     let cardNumber = e.target.id ;
     let cardClicked = document.getElementById(cardNumber) ;
-
     if (cardClicked.classList.contains("visible"))
         {
         alert("Tu as déjà retourné cette carte, choisis en une autre.")
     }
     else {
-        if (nbShot%2 === 0) {
+        
+        if (nbShot%2 === 0) { // première de la paire
             clearTimeout(timeoutID1);
             clearTimeout(timeoutID2);
+            makeInvisible(card1);
+            makeInvisible(card2);
             makeVisible(cardNumber)
             firstCardCliked = cardNumber ;
+            card1 = firstCardCliked ;
         }
-        else { 
+        else { // 2eme
+            card2 = cardNumber ;
             makeVisible(cardNumber);
-            if(firstCardCliked == cardNumber + 6 || firstCardCliked == cardNumber - 6 ){
-                console.log("Hey égalité !")
+            if((cardNumber == (firstCardCliked - 6)) || (firstCardCliked == (cardNumber - 6)) ){ // paire ok
+                card1 = undefined ; 
+                card2 = undefined ;
+                cardVisible += 2 ;
             }
             else {
-                console.log("2ème carte à jouer fausse")
+                showPair() ;
                 makeVisible(cardNumber);
-                timeoutID1 = setTimeout(makeInvisible, 3000, firstCardCliked);
-                timeoutID2 = setTimeout(makeInvisible, 3000, cardNumber);
             }
             }
-        nbShot ++ ;
-    }
-    // Vérifie si paire
-    //     cards.forEach()
-    // let searchEven = cards.filter((card) => card.classList.contains("visible")) ; 
-    // if (searchEven.length != 0) {console.log("Une paire !")}
-    // else {console.log("Pas paire...")}
-    
+            nbShot ++ ;
+            let h6 = document.querySelector("h6") ;
+            h6.innerText = "Nombre de coup joué : " + nbShot ;
+
+            if (cardVisible === 12){
+                gagne == true ;
+                alert("Tu as gagné en "+ nbShot/2 + " manches !")
+                gagne = false ;
+             }
+    } 
 }
+
 function getRandom(max){
     let randomNumber = Math.floor(Math.random()*max) ;
     return randomNumber ;
@@ -94,8 +107,14 @@ function makeVisible(cardNumber){
 
 function makeInvisible(cardNumber){
     let imageNumber = cardNumber ;
-
+   if(cardNumber !== undefined ){
     cards[cardNumber-1].classList.remove("visible") ;
     if (cardNumber > 6) {imageNumber = imageNumber -6 ;}
-    cards[cardNumber-1].style.backgroundImage = `url(./images/ressources1/question.svg`;
+    cards[cardNumber-1].style.backgroundImage = `url(./images/ressources1/question.svg`;}
+}
+
+function showPair(){
+    console.log("show must go on")
+    timeoutID1 = setTimeout(makeInvisible, 3000, card1);
+    timeoutID2 = setTimeout(makeInvisible, 3000, card2);
 }
