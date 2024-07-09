@@ -3,14 +3,17 @@ var cards ;
 var btnStart ;
 var nbShot ;
 var firstCardCliked ;
-var gagne = false ;
-
 
 function init(){
     cards = document.querySelectorAll(".memoryCard") ;
 
     btnStart = document.querySelector(".btnStart") ;
     btnStart.addEventListener("click", playgame) ;
+    document.addEventListener("keydown", (e) => {
+        if (e.key == " "){
+            playgame() ;
+        }
+    })
     showAllCards();
     
 }
@@ -26,6 +29,8 @@ function showAllCards(){
     } )
 }
 
+let h1Game = document.querySelector("h1") ;
+
 function playgame(){
     nbShot = 0 ;
     cards.forEach((card, index) => {
@@ -36,6 +41,8 @@ function playgame(){
     }) ;
     let h6 = document.querySelector("h6") ;
     h6.innerText = "Nombre de coup joué : " + nbShot ;
+    let h1Game = document.querySelector("h1") ;
+    h1Game.innerText = "Jouons !"
     /* Le style à appliquer pour toute les cartes au même endroit
         card.style.position = "absolute" ;
         card.style.top = "0" ;
@@ -55,8 +62,7 @@ function clickCard(e){
         {
         alert("Tu as déjà retourné cette carte, choisis en une autre.")
     }
-    else {
-        
+    else {       
         if (nbShot%2 === 0) { // première de la paire
             clearTimeout(timeoutID1);
             clearTimeout(timeoutID2);
@@ -67,8 +73,8 @@ function clickCard(e){
             card1 = firstCardCliked ;
         }
         else { // 2eme
-            card2 = cardNumber ;
             makeVisible(cardNumber);
+            card2 = cardNumber ;
             if((cardNumber == (firstCardCliked - 6)) || (firstCardCliked == (cardNumber - 6)) ){ // paire ok
                 card1 = undefined ; 
                 card2 = undefined ;
@@ -84,9 +90,8 @@ function clickCard(e){
             h6.innerText = "Nombre de coup joué : " + nbShot ;
 
             if (cardVisible === 12){
-                gagne == true ;
-                alert("Tu as gagné en "+ nbShot/2 + " manches !")
-                gagne = false ;
+                let h1Game = document.querySelector("h1") ;
+                h1Game.innerText = "Tu as gagné en "+ nbShot/2 + " manches !" ;
              }
     } 
 }
