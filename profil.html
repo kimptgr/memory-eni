@@ -13,40 +13,49 @@
         <script src="./js/script.js"></script>
         <title>Memory 🧠</title>
     </head>
-<body>
-    <header class="d-flex justify-content-center py-3">
-        <ul class="nav nav-pills">
-          <li class="nav-item"><a class="nav-link" href="./index.html">Accueil</a></li>
-          <li class="nav-item"><a class="nav-link" href="./inscription.html">Inscription</a></li>
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="./profil.html">Mon profil</a></li>
-          <li class="nav-item"><a class="nav-link" href="./connexion.html">Connexion</a></li>
-          <li class="nav-item"><a class="nav-link" href="./game.html">Jouer</a></li>
-        </ul>
-      </header>
-<main class="d-flex justify-content-center py-3">
-    <div class="col-lg-4">
-        <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>Mon profil</h2>
-        <form class="needs-validation" novalidate>
-            <div class="form-group">
-                <label for="name">Nom d'utilisateur</label>
-                <input class="form-control" type="text" name="name" id="name">
+    <body>
+        <header class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-center py-3">
+                        <ul class="nav nav-pills justify-content-center align-content-center flex-wrap">
+                            <li class="nav-item"><a class="nav-link" href="./index.html">Accueil</a></li>
+                            <li class="nav-item"><a class="nav-link"
+                                    href="./inscription.html">Inscription</a></li>
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="./profil.html">Mon profil</a></li>
+                            <li class="nav-item"><a class="nav-link" href="./connexion.html">Connexion</a></li>
+                            <li class="nav-item"><a class="nav-link" href="./game.html">Jouer</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="mail">Email</label>
-                <input class="form-control" type="email" name="mail" id="mail">
+        </header>
+    <main class="d-flex justify-content-center py-3">
+        <div class="col-lg-4">
+            <div class="text-center">
+            <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+            <h2>Mon profil</h2>
             </div>
-            <div class="form-group">
-                <label for="favoriteMemory">Choix du memory</label>
-                <select class="form-control" name="favoriteMemory" id="favoriteMemory"></select>
-            </div>
-            <div class="form-group">
-                <label for="favoriteSize">Taille du Memory</label>
-                <select class="form-control" name="favoriteSize" id="favoriteSize"></select>
-            </div>
-            <button class="btn btn-secondary"> Enregistrer les modifications</button>
-        </form>
-      </div>
-</main>
-</body>
-</html>
+            <form class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="name">Nom d'utilisateur</label>
+                    <input class="form-control" type="text" name="name" id="name">
+                </div>
+                <div class="form-group">
+                    <label for="mail">Email</label>
+                    <input class="form-control" type="email" name="mail" id="mail">
+                </div>
+                <div class="form-group">
+                    <label for="favoriteMemory">Choix du memory</label>
+                    <select class="form-control" name="favoriteMemory" id="favoriteMemory"></select>
+                </div>
+                <div class="form-group">
+                    <label for="favoriteSize">Taille du Memory</label>
+                    <select class="form-control" name="favoriteSize" id="favoriteSize"></select>
+                </div>
+                <button class="btn btn-secondary"> Enregistrer les modifications</button>
+            </form>
+          </div>
+    </main>
+    </body>
+    </html>

@@ -13,30 +13,46 @@
         <script src="./js/script.js"></script>
         <title>Memory 🧠</title>
     </head>
-<body>
-    <header class="d-flex justify-content-center py-3">
-        <ul class="nav nav-pills">
-          <li class="nav-item"><a class="nav-link" href="./index.html">Accueil</a></li>
-          <li class="nav-item"><a class="nav-link" href="./inscription.html">Inscription</a></li>
-          <li class="nav-item"><a class="nav-link" href="./profil.html">Mon profil</a></li>
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="./connexion.html">Connexion</a></li>
-          <li class="nav-item"><a class="nav-link" href="./game.html">Jouer</a></li>
-        </ul>
-      </header>
-    <main class="d-flex justify-content-center py-3">
-        <form class="form-signin" data-bitwarden-watching="1">
-            <h1 class="h3 mb-3 font-weight-normal text-center">Connexion</h1>
-            <div class="form-group">
-                <label for="inputEmail" class="sr-only">Mail</label>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+    <body>
+        <header class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-center py-3">
+                        <ul class="nav nav-pills justify-content-center align-content-center flex-wrap">
+                            <li class="nav-item"><a class="nav-link" href="./index.html">Accueil</a></li>
+                            <li class="nav-item"><a class="nav-link" href="./inscription.html">Inscription</a></li>
+                            <li class="nav-item"><a class="nav-link" href="./profil.html">Mon profil</a></li>
+                            <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                    href="./connexion.html">Connexion</a></li>
+                            <li class="nav-item"><a class="nav-link" href="./game.html">Jouer</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="inputPassword" class="sr-only">Mot de passe</label>
-                <input type="password" id="inputPassword" class="form-control mb-3" placeholder="Password" required="">
+        </header>
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-8 mx-auto img-thumbnail">
+                    <main class="d-flex justify-content-center py-3">
+                        <form class="form-signin" data-bitwarden-watching="1">
+                            <h1 class="h3 mb-3 font-weight-normal text-center">Connexion</h1>
+                            <div class="form-group mb-3">
+                                <label for="inputEmail" class="sr-only">Mail</label>
+                                <input type="email" id="inputEmail" class="form-control" placeholder="aaa@bbb.cc"
+                                    required="" autofocus="">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword" class="sr-only">Mot de passe</label>
+                                <input type="password" id="inputPassword" class="form-control mb-3"
+                                    placeholder="Mot de passe..." required="">
+                            </div>
+                            <div class="d-flex justify-content-center py-3">
+                                <button class="btn btn-lg btn-secondary btn-block" type="submit">Connexion</button>
+                            </div>
+                        </form>
+                    </main>
+                </div>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
-          </form>
-    </main>
-<!-- Form row bootstrap -->
-</body>
-</html>
+        </div>
+    </body>
+    </html>
