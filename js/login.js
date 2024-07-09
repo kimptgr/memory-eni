@@ -25,15 +25,15 @@ function init(){
 
 function verifyValidity(e){
     let userLoginInput = e.target ;
-    if (userLoginInput.value !== "" && userLoginInput.checkValidity()){
+
+    if(userLoginInput.value === "") {
+        userLoginInput.classList.remove("is-valid") ;
+        userLoginInput.classList.remove("is-invalid") ;
+    }
+    else if (userLoginInput.value !== "" && userLoginInput.checkValidity()){
         console.log(" >" + userLoginInput.value + "< ");
         userLoginInput.classList.add("is-valid") ;
         userLoginInput.classList.remove("is-invalid") ;
-    }
-    else if(userLoginInput.value === "") {
-        userLoginInput.classList.remove("is-valid") ;
-        userLoginInput.classList.remove("is-invalid") ;
-
     }
     else {
         console.log("login non ok")
@@ -41,12 +41,12 @@ function verifyValidity(e){
         userLoginInput.classList.add("is-invalid") ;
     }
 
-    // if (userLoginInput.value.length >= 3){
-    //     console.log("login ok")
-    // }
-    // else {
-    //     console.log("login non ok")
-    // }
+    let mdp1 = document.getElementById("pwd") ;
+    let mdp2 = document.getElementById("confirmPassword") ;
+
+    console.log(mdp2.id +"<mdp 1 login input >"+ userLoginInput.id)
+
+    // vérifier mdp1 = mdp 2
 }
 
 function changeLogin(){
