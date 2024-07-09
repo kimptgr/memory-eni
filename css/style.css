@@ -12,6 +12,7 @@ html, body {
 
 .boardGame {
     display: grid;
+    position: relative;
 
     @media (orientation: landscape) {
     grid-template-columns: repeat(4, 20vmin);
@@ -22,6 +23,7 @@ html, body {
         grid-template-rows: repeat(4, 30vmin);}
     gap: 5px;
 }
+
 .memoryCard {
     border: solid black 1px;
     background-size: cover;
