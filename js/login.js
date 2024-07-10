@@ -27,41 +27,106 @@ function init(){
 
 var isValid = false ;
 function verifyValidity(e){
-    let userLoginInput = e.target ;
-    let psw = document.getElementById("pwd") ;
-    let confirmPassword = document.getElementById("confirmPassword") ;
+    let userInput = e.target ;
+    console.log(userInput) ;
 
-    if(userLoginInput.value === "") {
-        userLoginInput.classList.remove("is-valid") ;
-        userLoginInput.classList.remove("is-invalid") ;
-        isValid = false ;
-    }
+    switch (userInput.id) {
+        case "name":
+            if(userInput.value.length >= 3){
+                validInput(userInput.id)
+            }
+            else{
+                invalidInput(userInput.id)
+            }
+            break;
+        case "mail":
+            const MAILREGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            if(MAILREGEX.test(userInput.value)){
+                validInput(userInput.id)
+            }
+            else{
+                invalidInput(userInput.id)
+            }
+            break;
+        case "pwd":
+            passwordToVerify = userInput.value ;
 
-    else if (e.target.id === "confirmPassword") {
-        console.log(psw.value === confirmPassword.value)
-        if (psw.value != confirmPassword.value){
-            confirmPassword.classList.remove("is-valid") ;
-            confirmPassword.classList.add("is-invalid") ;
-            isValid = false ;
+            const MINUSCULE = /[a-z]/ ;
+            const MAJUSCULE = /[A-Z]/ ;
+            const CHIFFRE = /[0-9]/ ;
+            const CARACSPE = /[@#$%^&+=!(){}\[\]:;<>,.?\/\\\-_]/ ;
+
+        if (
+            CARACSPE.test(passwordToVerify) &&
+            MINUSCULE.test(passwordToVerify) && 
+            MAJUSCULE.test(passwordToVerify) &&
+            CHIFFRE.test(passwordToVerify) &&
+            passwordToVerify.length > 5
+    ){
+        console.log("j'ai validé ta condition") ; 
+        validInput(userInput.id) ;
         }
         else {
-            confirmPassword.classList.add("is-valid") ;
-            confirmPassword.classList.remove("is-invalid") ;
-            isValid = true ;
+            invalidInput(userInput.id)
         }
+        break;
+            
+        case "confirmPassword":
+            let psw = document.getElementById("pwd") ;
+            if(psw.value === userInput.value){
+                validInput(userInput.id)
+            }
+            else{
+                invalidInput(userInput.id)
+            }
+            break;
+        default:
+            break;
     }
+    // if(userLoginInput.value === "") {
+    //     userLoginInput.classList.remove("is-valid") ;
+    //     userLoginInput.classList.remove("is-invalid") ;
+    //     isValid = false ;
+    // }
 
-    else if (userLoginInput.value !== "" && userLoginInput.checkValidity()){
-        userLoginInput.classList.add("is-valid") ;
-        userLoginInput.classList.remove("is-invalid") ;
-        isValid = true ;
-    }
-    else {
-        userLoginInput.classList.remove("is-valid") ;
-        userLoginInput.classList.add("is-invalid") ;
-        isValid = false ;
-    }
+    // else if (e.target.id === "confirmPassword") {
+    //     if (psw.value != confirmPassword.value){
+    //         confirmPassword.classList.remove("is-valid") ;
+    //         confirmPassword.classList.add("is-invalid") ;
+    //         isValid = false ;
+    //     }
+    //     else {
+    //         confirmPassword.classList.add("is-valid") ;
+    //         confirmPassword.classList.remove("is-invalid") ;
+    //         isValid = true ;
+    //     }
+    // }
 
+    // else if (userLoginInput.value !== "" && userLoginInput.checkValidity()){
+
+    //     userLoginInput.classList.add("is-valid") ;
+    //     userLoginInput.classList.remove("is-invalid") ;
+    //     isValid = true ;
+    // }
+    // else {
+    //     console.log("hello") ;
+    //         userLoginInput.classList.remove("is-valid") ;
+    //         userLoginInput.classList.add("is-invalid") ;
+    //         isValid = false ;
+    //     }
+}
+function validInput(id) {
+    let element = document.getElementById(id) ;
+    element.classList.add("is-valid") ;
+    element.classList.remove("is-invalid") ;
+    return true ;
+}
+
+function invalidInput(id) {
+    let element = document.getElementById(id) ;
+            element.classList.remove("is-valid") ;
+            element.classList.add("is-invalid") ;
+            return false ;
 }
 
 function changeLogin(){
