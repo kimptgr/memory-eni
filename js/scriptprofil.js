@@ -58,8 +58,6 @@ function showUser(user) {
 function saveNewData(e) {
     e.preventDefault() ;
 
-
-
     let inputName = document.getElementById("name") ;
     let inputMail = document.getElementById("mail") ;
     let inputFavMem = document.getElementById("favoriteMemory") ;

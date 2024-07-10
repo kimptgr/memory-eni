@@ -128,5 +128,13 @@ function createAccount(e){
 }
 
 function saveUser(userData) {
-    localStorage.setItem("user", JSON.stringify(userData));
+    let usersJSON = localStorage.getItem("users");
+    let users = JSON.parse(usersJSON) ;
+    if(users !== null) {
+        users.push(userData) ;
+    }
+    else {
+        users = [userData]
+    }
+    localStorage.setItem("users", JSON.stringify(userData));
 }
