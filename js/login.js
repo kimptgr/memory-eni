@@ -23,30 +23,43 @@ function init(){
     btnInscription.addEventListener("click", createAccount) ;
 }
 
+var isValid = false ;
 function verifyValidity(e){
     let userLoginInput = e.target ;
+    let psw = document.getElementById("pwd") ;
+    let confirmPassword = document.getElementById("confirmPassword") ;
 
     if(userLoginInput.value === "") {
         userLoginInput.classList.remove("is-valid") ;
         userLoginInput.classList.remove("is-invalid") ;
+        isValid = false ;
     }
+
+    else if (e.target.id === "confirmPassword") {
+        console.log(psw.value === confirmPassword.value)
+        if (psw.value != confirmPassword.value){
+            confirmPassword.classList.remove("is-valid") ;
+            confirmPassword.classList.add("is-invalid") ;
+            isValid = false ;
+        }
+        else {
+            confirmPassword.classList.add("is-valid") ;
+            confirmPassword.classList.remove("is-invalid") ;
+            isValid = true ;
+        }
+    }
+
     else if (userLoginInput.value !== "" && userLoginInput.checkValidity()){
-        console.log(" >" + userLoginInput.value + "< ");
         userLoginInput.classList.add("is-valid") ;
         userLoginInput.classList.remove("is-invalid") ;
+        isValid = true ;
     }
     else {
-        console.log("login non ok")
         userLoginInput.classList.remove("is-valid") ;
         userLoginInput.classList.add("is-invalid") ;
+        isValid = false ;
     }
 
-    let mdp1 = document.getElementById("pwd") ;
-    let mdp2 = document.getElementById("confirmPassword") ;
-
-    console.log(mdp2.id +"<mdp 1 login input >"+ userLoginInput.id)
-
-    // vérifier mdp1 = mdp 2
 }
 
 function changeLogin(){
@@ -70,10 +83,35 @@ function confirmPassword(){
 
 function createAccount(e){
     e.preventDefault() ;
-    userData = {
-        name: changeLogin(),
-        mail: changeMail(),
-        pwd: confirmPassword()
-    };
-    console.log(userData)
+    if (document.getElementById("notification")){
+        document.getElementById("notification").remove() ;
+    }
+    let btnInscription = document.getElementById("btnInscription") ;
+
+    const NEWDIV = document.createElement("div") ;
+    NEWDIV.setAttribute("id", "notification") ;
+    const NEW_P = document.createElement("p") ;
+    
+    btnInscription.insertAdjacentElement('afterend', NEWDIV)
+    
+    if (isValid) {
+        userData = {
+            name: changeLogin(),
+            mail: changeMail(),
+            pwd: confirmPassword()
+        };
+        const newContent = document.createTextNode(`Bienvenue ${userData.name}, have fun !`);
+        NEW_P.appendChild(newContent)
+        saveUser(userData)
+
+    }
+    else {
+        const newContent = document.createTextNode(`Merci de remplir correctement le formulaire`);
+        NEW_P.appendChild(newContent)
+    }
+
+    NEWDIV.appendChild(NEW_P) ;
+    btnInscription.insertAdjacentElement('afterend', NEWDIV);
 }
+
+Azerty123
