@@ -24,21 +24,26 @@ let userData = {
     favoriteSize: 12
 };
 
+var usersJSON = localStorage.getItem("users");
+var users = JSON.parse(usersJSON) ;
+
 function verifyValidity(e){
     let userInput = e.target ;
 
     switch (userInput.id) {
         case "name":
-            if(userInput.value.length >= 3){
+            if(userInput.value.length >= 3 
+            ){
                 validInput(userInput.id);
             }
             else{
                 invalidInput(userInput.id)
             }
             break;
-            case "mail":
+            case "mail": 
                 const MAILREGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-                if(MAILREGEX.test(userInput.value)){
+                if(MAILREGEX.test(userInput.value) 
+            ){
                     validInput(userInput.id)
                 }
                 else{
@@ -86,8 +91,6 @@ function validInput(id) {
     element.classList.add("is-valid") ;
     element.classList.remove("is-invalid") ;
     userData[id] = element.value ;
-    console.log(userData.id +" <  > " + element.value) ;
-    console.log(userData);
     
     return true ;
 }
@@ -97,7 +100,6 @@ function invalidInput(id) {
     element.classList.remove("is-valid") ;
     element.classList.add("is-invalid") ;
     userData[id] = "" ;
-
             return false ;
 }
 
@@ -112,8 +114,17 @@ function createAccount(e){
     const NEWDIV = document.createElement("div") ;
     NEWDIV.setAttribute("id", "notification") ;
     const NEW_P = document.createElement("p") ;
-    btnInscription.insertAdjacentElement('afterend', NEWDIV)
-    if (userData.name != "" && userData.mail !== "" && userData.pwd !== ""){
+    // btnInscription.insertAdjacentElement('beforebegin', NEWDIV);
+
+    let msgInvalid = document.getElementById("feedbackUsermail") ;
+
+    if (checkIfUsed("name", userData.name) ){
+        msgInvalid.innerText = "Nom d'utilisateur déjà pris" ;
+    }
+    else if (checkIfUsed("mail", userData.mail)) {
+        msgInvalid.innerText = "Adresse mail déjà utilisée" ;
+    }
+    else if (userData.name != "" && userData.mail !== "" && userData.pwd !== ""){
         const newContent = document.createTextNode(`Bienvenue ${userData.name}, have fun !`);
         NEW_P.appendChild(newContent)
         saveUser(userData)
@@ -124,21 +135,28 @@ function createAccount(e){
     }
 
     NEWDIV.appendChild(NEW_P) ;
-    btnInscription.insertAdjacentElement('afterend', NEWDIV);
+    btnInscription.insertAdjacentElement('beforebegin', NEWDIV);
 }
 
 function saveUser(userData) {
-    let usersJSON = localStorage.getItem("users");
-    let users = JSON.parse(usersJSON) ;
-
     if(users !== null) {
       users.push(userData) ;
-       // users = {users, userData} ;
     }
     else {
         users = [userData]
     }
-    console.log(users) ;
-    console.log(userData) ;
     localStorage.setItem("users", JSON.stringify(users));
+}
+
+function checkIfUsed(key, value) {
+    let isUsed = false;
+    validInput("btnInscription");
+    users.forEach(element => {
+        if(element[key] == value){
+            isUsed = true
+            invalidInput("btnInscription");
+            btnInscription
+        }
+    });
+    return isUsed
 }
