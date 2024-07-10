@@ -31,9 +31,11 @@ function showAllCards(){
 
 let h1Game = document.querySelector("h1") ;
 
+let cardVisible = 0 ;
 function playgame(){
+    cardVisible = 0
     nbShot = 0 ;
-    cards.forEach((card, index) => {
+    cards.forEach(card => {
         card.style.backgroundImage = "url(./images/ressources1/question.svg" ;
         card.style.order = getRandom(11) ;
         card.addEventListener("click", clickCard) ;
@@ -53,7 +55,6 @@ function playgame(){
 
 let card1, card2 ;
 let timeoutID1, timeoutID2 ;
-let cardVisible = 0 ;
 
 function clickCard(e){
     let cardNumber = e.target.id ;

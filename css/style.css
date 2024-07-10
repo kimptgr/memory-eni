@@ -34,3 +34,12 @@ html, body {
 img {
     max-height: 350px;
 }
+.memoryCard {
+    transition:transform 0.5s linear, background-image 0.25s linear 0.25s ;
+
+}
+.visible {
+    transform: rotateY(180deg);
+    backface-visibility : visible ;
+
+}
