@@ -114,7 +114,6 @@ function createAccount(e){
     const NEWDIV = document.createElement("div") ;
     NEWDIV.setAttribute("id", "notification") ;
     const NEW_P = document.createElement("p") ;
-    // btnInscription.insertAdjacentElement('beforebegin', NEWDIV);
 
     let msgInvalid = document.getElementById("feedbackUsermail") ;
 
