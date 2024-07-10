@@ -37,23 +37,27 @@
             <h2>Mon profil</h2>
             </div>
             <form class="needs-validation" novalidate>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Nom d'utilisateur</label>
                     <input class="form-control" type="text" name="name" id="name">
                 </div>
-                <div class="form-group">
+                <div class=" mb-3">
                     <label for="mail">Email</label>
                     <input class="form-control" type="email" name="mail" id="mail">
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="favoriteMemory">Choix du memory</label>
-                    <select class="form-control" name="favoriteMemory" id="favoriteMemory"></select>
+                    <select class="form-control" name="favoriteMemory" id="favoriteMemory">
+                        <option value="veggies">Légumes</option>
+                    </select>
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="favoriteSize">Taille du Memory</label>
-                    <select class="form-control" name="favoriteSize" id="favoriteSize"></select>
+                    <select class="form-control" name="favoriteSize" id="favoriteSize">
+                        <option value="12">12 tuiles</option>
+                    </select>
                 </div>
-                <button class="btn btn-secondary"> Enregistrer les modifications</button>
+                <button id="btnModification" class="btn btn-secondary"> Enregistrer les modifications</button>
             </form>
           </div>
     </main>

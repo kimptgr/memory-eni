@@ -2,7 +2,9 @@ window.onload = init ;
 let userData = {
     name: "",
     mail: "",
-    pwd: ""
+    pwd: "",
+    favoriteMemory: "veggies",
+    favoriteSize: 12
 };
 
 
@@ -114,4 +116,6 @@ function createAccount(e){
     btnInscription.insertAdjacentElement('afterend', NEWDIV);
 }
 
-Azerty123
+function saveUser(userData) {
+    localStorage.setItem("user", JSON.stringify(userData));
+}
