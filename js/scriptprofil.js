@@ -11,7 +11,8 @@ function init() {
 }
 
 function getUser() {
-    let dataInJSON = localStorage.getItem("user");
+    let dataInJSON = document.cookie ;
+    console.log(dataInJSON) ;
     let data = JSON.parse(dataInJSON) ;
     dataUser = data ;
     return dataUser
