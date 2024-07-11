@@ -17,19 +17,17 @@ function connect(e){
         e.target.classList ;
         users.forEach((user) => {
             if(user["mail"] == inputUserMail && user["pwd"] == inputUserPassword){
-                // e.target.classList.remove("is-invalid") ;
-                // e.target.classList.add("is-valid") ;
+                e.target.classList.remove("is-invalid") ;
+                e.target.classList.add("is-valid") ;
                 alert(`Bienvenue !`) ; 
-                window.location.replace("./game.html") ;
                 let currentUser = JSON.stringify(user) ;
                 document.cookie = `currentUser=${currentUser}` ;
+                window.location.href = "./game.html" ;
             }
-            else {
-                // e.target.classList.remove("is-invalid") ;
-                // e.target.classList.add("is-valid") ;
-                
-                // e.target.classList.remove("is-valid") ;
-                // e.target.classList.add("is-invalid") ; 
+            else { // si faux donc
+                e.preventDefault();             
+                e.target.classList.remove("is-valid") ;
+                e.target.classList.add("is-invalid") ;
             }
             getUser()
             e.target.classList ;
