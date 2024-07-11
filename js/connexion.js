@@ -6,10 +6,6 @@ window.onload = init ;
 function init(){
     let btnConnexion = document.getElementById("submit");
     btnConnexion.addEventListener("click" , connect) ;
-    if (getUser())
-        window.location.href = "./game.html" ;
-       else{}
-       
 }
 
 function connect(e){
@@ -69,18 +65,6 @@ function getUser() {
             });}
             return isUsed
         }
-        
-        function saveUser(userData) {
-            let usersJSON = localStorage.getItem("users");
-            let users = JSON.parse(usersJSON) ;
-            if(users !== null) {
-              users.push(userData) ;
-            }
-            else {
-                users = [userData]
-            }
-            localStorage.setItem("users", JSON.stringify(users));
-            window.location.href = "./connexion.html" ; }
 
         // =============================TODO
         // Manque l'affichage si mauvais utilisateur faux 
