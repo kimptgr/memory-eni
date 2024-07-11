@@ -81,10 +81,10 @@ function playgame(){
         card.classList.remove("visible") ;
     });
     let h6 = document.querySelector("h6") ;
-    h6.innerText = "Nombre de coup joué : " + nbShot ;
+    h6.innerText = "Manche 1" ;
 
     let h1Game = document.querySelector("h1") ;
-    h1Game.innerText = "Jouons !" ;
+    h1Game.innerText = "Espace pour recommencer" ;
     /* Le style à appliquer pour toute les cartes au même endroit
         card.style.position = "absolute" ;
         card.style.top = "0" ;
@@ -128,7 +128,7 @@ function clickCard(e){
             }
             nbShot ++ ;
             let h6 = document.querySelector("h6") ;
-            h6.innerText = "Nombre de coup joué : " + nbShot ;
+            h6.innerText = "Manche " + Math.round(nbShot/2) ;
 
             if (cardVisible === 12){
                 let h1Game = document.querySelector("h1") ;
