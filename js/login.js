@@ -146,6 +146,7 @@ function createAccount(e){
     btnInscription.insertAdjacentElement('beforebegin', NEWDIV);
 }
 
+//C/Coller dans profil
 function saveUser(userData) {
     let usersJSON = localStorage.getItem("users");
     let users = JSON.parse(usersJSON) ;

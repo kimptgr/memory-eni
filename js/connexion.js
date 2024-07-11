@@ -54,6 +54,7 @@ function getUser() {
     }
 }
 
+// c/coller dans profil
         function checkIfUsed(key, value) {
             let usersJSON = localStorage.getItem("users");
             let users = JSON.parse(usersJSON) ;
@@ -68,7 +69,18 @@ function getUser() {
             });}
             return isUsed
         }
-
+        
+        function saveUser(userData) {
+            let usersJSON = localStorage.getItem("users");
+            let users = JSON.parse(usersJSON) ;
+            if(users !== null) {
+              users.push(userData) ;
+            }
+            else {
+                users = [userData]
+            }
+            localStorage.setItem("users", JSON.stringify(users));
+            window.location.href = "./connexion.html" ; }
 
         // =============================TODO
         // Manque l'affichage si mauvais utilisateur faux 

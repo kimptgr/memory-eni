@@ -52,6 +52,7 @@ function showAllCards(){
 let h1Game = document.querySelector("h1") ;
 
 let cardVisible = 0 ;
+
 function playgame(){
     cardVisible = 0
     nbShot = 0 ;
@@ -60,11 +61,12 @@ function playgame(){
         card.style.order = getRandom(11) ;
         card.addEventListener("click", clickCard) ;
         card.classList.remove("visible") ;
-    }) ;
+    });
     let h6 = document.querySelector("h6") ;
     h6.innerText = "Nombre de coup joué : " + nbShot ;
+    
     let h1Game = document.querySelector("h1") ;
-    h1Game.innerText = "Jouons !"
+    h1Game.innerText = "Jouons !" ;
     /* Le style à appliquer pour toute les cartes au même endroit
         card.style.position = "absolute" ;
         card.style.top = "0" ;
