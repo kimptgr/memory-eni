@@ -47,7 +47,7 @@ let arrayOfsrc = [
         format: ".webp')",
         taille: 16
     },
-    {path: "url('./images/ressources1/dinosaures/",
+    {path: "url('./images/ressources1/dinosauresAvecNom/",
         format: ".jpg')",
         taille: 20}
 ] ;

@@ -65,8 +65,7 @@ img {
 }
 .memoryCard {
     transition:transform 0.5s linear, background-image 0.25s linear 0.25s ;
-
 }
 .visible {
-    transform: rotateY(180deg);
+    transform: rotateY(360deg);
 }
