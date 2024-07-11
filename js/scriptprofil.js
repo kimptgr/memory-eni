@@ -1,6 +1,5 @@
 window.onload = init ;
 var dataUser ;
-var dataUser = getUser() ;
 
 function init() {
     if (getUser())
@@ -13,15 +12,15 @@ function init() {
 }
 
 function getUser() {
-    let dataInCookie = document.cookie ;
-    if (dataInCookie > 0){
-    let tabCookie = dataInCookie.split("=");
-    let dataInJSON = tabCookie[1] ;
-    let data = JSON.parse(dataInJSON) ;
-    dataUser = data ;
-    return dataUser}
+    console.log(document.cookie === true) ;
+    if (document.cookie){
+        let dataInCookie = document.cookie ;
+        let tabCookie = dataInCookie.split("=");
+        let dataInJSON = tabCookie[1] ;
+        let data = JSON.parse(dataInJSON) ;
+        dataUser = data ;
+        return dataUser}
     else {
-        window.location.replace("./connexion.html");
     }
 }
 

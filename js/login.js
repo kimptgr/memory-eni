@@ -24,8 +24,6 @@ let userData = {
     favoriteSize: 12
 };
 
-var usersJSON = localStorage.getItem("users");
-var users = JSON.parse(usersJSON) ;
 var isNameOk = false ;
 var isMailOk = false ;
 var isPswOk = false ;
@@ -149,6 +147,8 @@ function createAccount(e){
 }
 
 function saveUser(userData) {
+    let usersJSON = localStorage.getItem("users");
+    let users = JSON.parse(usersJSON) ;
     if(users !== null) {
       users.push(userData) ;
     }
@@ -156,12 +156,14 @@ function saveUser(userData) {
         users = [userData]
     }
     localStorage.setItem("users", JSON.stringify(users));
-
-    let currentUser = JSON.stringify(userData) ;
-    document.cookie = `currentUser=${currentUser}` ;
+    window.location.href = "./connexion.html" ;
+    // let currentUser = JSON.stringify(userData) ;
+    // document.cookie = `currentUser=${currentUser}` ;
 }
 
 function checkIfUsed(key, value) {
+    let usersJSON = localStorage.getItem("users");
+    let users = JSON.parse(usersJSON) ;
     let isUsed = false;
     validInput("btnInscription");
     if (users !== null) {
