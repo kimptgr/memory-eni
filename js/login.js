@@ -164,6 +164,7 @@ function saveUser(userData) {
 function checkIfUsed(key, value) {
     let isUsed = false;
     validInput("btnInscription");
+    console.log(users)
     if (users !== null) {
     users.forEach(element => {
         if(element[key] == value){

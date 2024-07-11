@@ -34,6 +34,9 @@ function connect(e){
             e.target.classList ;
         }
         );}
+
+        // =============================TODO
+        // Manque l'affichage si mauvais utilisateur faux 
     
 
 

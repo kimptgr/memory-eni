@@ -11,8 +11,11 @@ function init() {
 }
 
 function getUser() {
-    let dataInJSON = document.cookie ;
-    console.log(dataInJSON) ;
+    let dataInCookie = document.cookie ;
+
+    let tabCookie = dataInCookie.split("=");
+    console.log(tabCookie[1]);
+    let dataInJSON = tabCookie[1] ;
     let data = JSON.parse(dataInJSON) ;
     dataUser = data ;
     return dataUser
