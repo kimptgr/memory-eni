@@ -3,6 +3,9 @@ html, body {
     margin: 0;
 }
 
+/* =======index ============================================= */
+
+/* =======Inscription======================================== */
 #pswForce{
     position: relative;
 }
@@ -28,7 +31,7 @@ html, body {
 #fort {
     border-top : 4px solid green; 
 }
-
+/* ================ game =============================== */
 .mainGame {
     display: flex;
     flex-direction: column;

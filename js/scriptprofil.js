@@ -2,11 +2,15 @@ window.onload = init ;
 var dataUser ;
 
 function init() {
-    if (getUser())
-         showUser(getUser()) ; 
+    if (getUser()){
+         showUser(getUser()) ;
+    }
         else
         window.location.href = "./inscription.html" ;
     getPkmn() ;
+    let selectFavoriteMemory = document.getElementById("favoriteMemory") ;
+    selectFavoriteMemory.addEventListener("change", showMemory) ;
+    
     let btnModif = document.getElementById("btnModification") ;
     btnModif.addEventListener("click", saveNewData)
 }
@@ -55,10 +59,25 @@ function showUser(user) {
     inputMail.setAttribute("value", user.mail) ;
     
     let inputFavMem = document.getElementById("favoriteMemory") ;
-    inputFavMem.setAttribute("value", user.favoriteMemory) ;
+    for (let i = 0; i < inputFavMem.options.length; i++) {
+        if (inputFavMem.options[i].value === user.favoriteMemory) {
+            inputFavMem.options[i].selected = true;
+            break;
+        }
+    }
+    showMemory() ;
+
+    // inputFavMem.setAttribute("value", user.favoriteMemory) ;
     
     let inputFavSize = document.getElementById("favoriteSize") ;
     inputFavSize.setAttribute("value", user.favoriteSize) ;
+} ;
+
+function showMemory() {
+    let arrayOfmemoImgSrc = ["./images/ressources1/memory-legume/memory_detail.png", "./images/ressources1/animauxAnimes/memory_detail_animaux_animes.png", "./images/ressources1/dinosaures/memory_detail_dinosaures.png"] ;
+    let memorImg = document.getElementById("memorImg") ;
+    let selectFavoriteMemory = document.getElementById("favoriteMemory")
+    memorImg.src = `${arrayOfmemoImgSrc[selectFavoriteMemory.value]}` ;
 } ;
 
 function saveNewData(e) {
