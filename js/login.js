@@ -20,7 +20,7 @@ let userData = {
     name: "",
     mail: "",
     pwd: "",
-    favoriteMemory: "veggies",
+    favoriteMemory: 0,
     favoriteSize: 12
 };
 

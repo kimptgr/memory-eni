@@ -6,6 +6,8 @@ var firstCardCliked ;
 var urlImage = 'url("./images/ressources1/memory-legume/' ;
 var imageType = '.svg")' ;
 var dataUser ;
+var pathImage ;
+
 function init(){
     cards = document.querySelectorAll(".memoryCard") ;
     // btnStart = document.querySelector(".btnStart") ;
@@ -37,14 +39,30 @@ function getUser() {
     }
 }
 
+let arrayOfsrc = [
+    {path : "url('./images/ressources1/memory-legume/",
+        format: ".svg')",
+        taille: 12
+    }, {path : "url('./images/ressources1/animauxAnimes/",
+        format: ".webp')",
+        taille: 16
+    },
+    {path: "url('./images/ressources1/dinosaures/",
+        format: ".jpg')",
+        taille: 20}
+] ;
+
 function showAllCards(){
-    cards.forEach((card, index) => {
-        if (index < 6 ) {
-            let pathImage = urlImage + (index + 1) + imageType ;
-            card.style.backgroundImage = urlImage + (index + 1) + imageType ;
+        favMemSrc = arrayOfsrc[dataUser.favoriteMemory] ;
+        cards.forEach((card, index) => {
+            if (index < 6 ) {
+                pathImage =  arrayOfsrc[dataUser.favoriteMemory].path + (index + 1) + arrayOfsrc[dataUser.favoriteMemory].format ;
+                console.log(pathImage) ;
+            card.style.backgroundImage = pathImage ;
             }
             else {
-            card.style.backgroundImage = `url("./images/ressources1/memory-legume/${index - 5}.svg")`;
+                pathImage = favMemSrc.path + (index - 5) + favMemSrc.format ;
+            card.style.backgroundImage = pathImage;
         }
     } )
 }
@@ -64,7 +82,7 @@ function playgame(){
     });
     let h6 = document.querySelector("h6") ;
     h6.innerText = "Nombre de coup joué : " + nbShot ;
-    
+
     let h1Game = document.querySelector("h1") ;
     h1Game.innerText = "Jouons !" ;
     /* Le style à appliquer pour toute les cartes au même endroit
@@ -130,7 +148,7 @@ function makeVisible(cardNumber){
 
     cards[cardNumber-1].classList.add("visible") ;
     if (cardNumber > 6) {imageNumber = imageNumber -6 ;}
-    cards[cardNumber-1].style.backgroundImage = `url("./images/ressources1/memory-legume/${imageNumber}.svg")`;
+    cards[cardNumber-1].style.backgroundImage = arrayOfsrc[dataUser.favoriteMemory].path +imageNumber+ arrayOfsrc[dataUser.favoriteMemory].format;
 }
 
 function makeInvisible(cardNumber){

@@ -43,6 +43,4 @@ img {
 }
 .visible {
     transform: rotateY(180deg);
-    backface-visibility : visible ;
-
 }

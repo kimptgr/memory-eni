@@ -97,10 +97,10 @@ function saveNewData(e) {
         currentUser.mail = inputMail ;
     }
     if(inputFavMem !== users[currentUserIndex].favoriteMemory){
-        currentUser.mail = inputMail ;
+        currentUser.favoriteMemory = inputFavMem ;
     }
     if(inputFavSize != users[currentUserIndex].favoriteSize){
-        currentUser.mail = inputMail ;
+        currentUser.favoriteSize = inputFavSize ;
     }
 
     //Update change 
