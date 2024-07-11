@@ -1,5 +1,7 @@
 window.onload = init ;
 var dataUser ;
+var dataUser = getUser() ;
+
 function init() {
     if (getUser())
          showUser(getUser()) ; 
@@ -12,14 +14,17 @@ function init() {
 
 function getUser() {
     let dataInCookie = document.cookie ;
-
+    if (dataInCookie > 0){
     let tabCookie = dataInCookie.split("=");
-    console.log(tabCookie[1]);
     let dataInJSON = tabCookie[1] ;
     let data = JSON.parse(dataInJSON) ;
     dataUser = data ;
-    return dataUser
+    return dataUser}
+    else {
+        window.location.replace("./connexion.html");
+    }
 }
+
 
 function getPkmn(){
     let valuePkmn = getRandom(300); ;

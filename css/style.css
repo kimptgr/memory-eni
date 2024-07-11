@@ -13,6 +13,8 @@ html, body {
 .boardGame {
     display: grid;
     position: relative;
+    padding: 10px;
+background: linear-gradient(45deg, rgba(212,170,255,1) 17%, rgba(187,242,255,1) 84%, rgba(255,255,255,1) 100%);
 
     @media (orientation: landscape) {
     grid-template-columns: repeat(4, 20vmin);
@@ -29,6 +31,7 @@ html, body {
 .memoryCard {
     border: solid black 1px;
     background-size: cover;
+    background-color: white;
 }
 
 img {

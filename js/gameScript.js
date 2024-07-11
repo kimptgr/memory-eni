@@ -3,12 +3,14 @@ var cards ;
 var btnStart ;
 var nbShot ;
 var firstCardCliked ;
-
+var urlImage = 'url("./images/ressources1/memory-legume/' ;
+var imageType = '.svg")' ;
+var dataUser = getUser() ;
 function init(){
     cards = document.querySelectorAll(".memoryCard") ;
-
-    btnStart = document.querySelector(".btnStart") ;
-    btnStart.addEventListener("click", playgame) ;
+    console.log(dataUser) ; 
+    // btnStart = document.querySelector(".btnStart") ;
+    // btnStart.addEventListener("click", playgame) ;
     document.addEventListener("keydown", (e) => {
         if (e.key == " "){
             playgame() ;
@@ -18,10 +20,26 @@ function init(){
     
 }
 
+function getUser() {
+    let dataInCookie = document.cookie ;
+    console.log(dataInCookie.length > 0) ;
+    if (dataInCookie > 0){
+    let tabCookie = dataInCookie.split("=");
+    let dataInJSON = tabCookie[1] ;
+    let data = JSON.parse(dataInJSON) ;
+    dataUser = data ;
+    return dataUser}
+    else {
+        window.location.replace("./connexion.html");
+    }
+}
+
 function showAllCards(){
     cards.forEach((card, index) => {
         if (index < 6 ) {
-            card.style.backgroundImage = `url("./images/ressources1/memory-legume/${index + 1}.svg")`;
+            let pathImage = urlImage + (index + 1) + imageType ;
+            console.log(pathImage) ;
+            card.style.backgroundImage = urlImage + (index + 1) + imageType ;
             }
             else {
             card.style.backgroundImage = `url("./images/ressources1/memory-legume/${index - 5}.svg")`;
