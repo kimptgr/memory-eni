@@ -58,12 +58,30 @@ function verifyValidity(e){
     break;
     case "pwd":
         passwordToVerify = userInput.value ;
-        
         const MINUSCULE = /[a-z]/ ;
         const MAJUSCULE = /[A-Z]/ ;
         const CHIFFRE = /[0-9]/ ;
         const CARACSPE = /[@#$%^&+=!(){}\[\]:;<>,.?\/\\\-_]/ ;
-        
+
+        let faible = document.getElementById("faible");
+        let moyen = document.getElementById("moyen");
+        let fort = document.getElementById("fort");
+
+        if(passwordToVerify.length > 8 && (CARACSPE.test(passwordToVerify) || CHIFFRE.test(passwordToVerify) )){
+            faible.style.display = "inline-block" ;
+            moyen.style.display = "inline-block" ;
+            fort.style.display = "inline-block" ;
+        }
+        else if(passwordToVerify.length > 5 && (CARACSPE.test(passwordToVerify) || CHIFFRE.test(passwordToVerify))) {
+            faible.style.display = "inline-block" ;
+            moyen.style.display = "inline-block" ;
+            fort.style.display = "none" ;
+        }
+        else if (passwordToVerify.length < 6){
+            faible.style.display = "inline-block" ;
+            moyen.style.display = "none" ;
+            fort.style.display = "none" ;
+        };
         if (
             CARACSPE.test(passwordToVerify) &&
             MINUSCULE.test(passwordToVerify) && 
