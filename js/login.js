@@ -2,7 +2,7 @@ window.onload = init ;
 
 function init(){
     let userLogin = document.getElementById("name") ;
-    userLogin.addEventListener("input", verifyValidity) ;
+    userLogin.addEventListener("input", verifyNameValidity) ;
 
     let userMail = document.getElementById("mail") ;
     userMail.addEventListener("input", verifyMailValidity) ;
@@ -212,18 +212,29 @@ function shakeWindow(){
 }
 
 // =================================== Fonctions 
-function verifyMailValidity(){
+function verifyMailValidity(e){
     const MAILREGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-            if(MAILREGEX.test(userInput.value) 
+            if(MAILREGEX.test(e.target.value) 
             ){
-        validInput(userInput.id)
+        validInput(e.target.id)
         isMailOk = true ;
     }
     else{
-        invalidInput(userInput.id)
+        invalidInput(e.target.id)
         isMailOk = false ;
     }
 }
 
+function verifyNameValidity(e){
+    if(e.target.value.length >= 3 
+    ){
+        validInput(e.target.id);
+        isNameOk = true ;
+    }
+    else{
+        invalidInput(e.target.id) ;
+        isNameOk = false ;
+    }
+}
 //=================================================
 
