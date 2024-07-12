@@ -70,7 +70,7 @@ function showUser(user) {
 } ;
 
 function showMemory() {
-    let arrayOfmemoImgSrc = ["./images/ressources1/memory-legume/memory_detail.png", "./images/ressources1/animauxAnimes/memory_detail_animaux_animes.png", "./images/ressources1/dinosaures/memory_detail_dinosaures.png"] ;
+    let arrayOfmemoImgSrc = ["./images/ressources1/memory-legume/memory_detail.png", "./images/ressources1/animauxAnimes/memory_detail_animaux_animes.png", "./images/ressources1/dinosauresAvecNom/"] ;
     let memorImg = document.getElementById("memorImg") ;
     let selectFavoriteMemory = document.getElementById("favoriteMemory")
     memorImg.src = `${arrayOfmemoImgSrc[selectFavoriteMemory.value]}` ;
