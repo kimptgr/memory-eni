@@ -5,7 +5,7 @@ function init(){
     userLogin.addEventListener("input", verifyValidity) ;
 
     let userMail = document.getElementById("mail") ;
-    userMail.addEventListener("input", verifyValidity) ;
+    userMail.addEventListener("input", verifyMailValidity) ;
 
     let userPwd = document.getElementById("pwd") ;
     userPwd.addEventListener("input", verifyValidity) ;
@@ -149,9 +149,11 @@ function createAccount(e){
 
     if (checkIfUsed("name", userData.name) ){
         msgInvalid.innerText = "Nom d'utilisateur déjà pris" ;
+        shakeWindow() ;
     }
     else if (checkIfUsed("mail", userData.mail)) {
         msgInvalid.innerText = "Adresse mail déjà utilisée" ;
+        shakeWindow() ;
     }
     else if (userData.name != "" && userData.mail !== "" && userData.pwd !== ""
      //   && userData.pwd === userData.confirm///////////////////////////////////////////////////////////////////////////////
@@ -162,6 +164,7 @@ function createAccount(e){
         saveUser(userData)
     }
     else {
+        shakeWindow() ;
         const newContent = document.createTextNode(`Merci de remplir correctement le formulaire`);
         NEW_P.appendChild(newContent)
     }
@@ -201,3 +204,26 @@ function checkIfUsed(key, value) {
     });}
     return isUsed
 }
+function shakeWindow(){
+        document.body.classList.add('shake');
+        setTimeout(() => {
+            document.body.classList.remove('shake');
+        }, 500)
+}
+
+// =================================== Fonctions 
+function verifyMailValidity(){
+    const MAILREGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            if(MAILREGEX.test(userInput.value) 
+            ){
+        validInput(userInput.id)
+        isMailOk = true ;
+    }
+    else{
+        invalidInput(userInput.id)
+        isMailOk = false ;
+    }
+}
+
+//=================================================
+
