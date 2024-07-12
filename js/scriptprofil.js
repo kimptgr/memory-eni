@@ -34,10 +34,6 @@ function showPkmn(data){
     NEWIMG.setAttribute("src", data.sprites.front_default) ;
 }
 
-function getRandom(max){
-    let randomNumber = Math.floor(Math.random()*max) ;
-    return randomNumber 
-}
 //==========================================================================
 function getUser() {
     if (document.cookie){

@@ -1,3 +1,4 @@
+"use-strict" ;
 import { getRandom } from './utils/random.js';
 
 window.onload = init ;
@@ -11,6 +12,7 @@ var dataUser ;
 var pathImage ;
 
 function init(){
+    makeBoardGame() ;
     cards = document.querySelectorAll(".memoryCard") ;
     // btnStart = document.querySelector(".btnStart") ;
     // btnStart.addEventListener("click", playgame) ;
@@ -59,7 +61,6 @@ function showAllCards(){
         cards.forEach((card, index) => {
             if (index < 6 ) {
                 pathImage =  arrayOfsrc[dataUser.favoriteMemory].path + (index + 1) + arrayOfsrc[dataUser.favoriteMemory].format ;
-                console.log(pathImage) ;
             card.style.backgroundImage = pathImage ;
             }
             else {
@@ -145,7 +146,7 @@ function makeVisible(cardNumber){
     cards[cardNumber-1].classList.add("visible") ;
     if (cardNumber > 6) {imageNumber = imageNumber -6 ;}
     cards[cardNumber-1].style.backgroundImage = arrayOfsrc[dataUser.favoriteMemory].path +imageNumber+ arrayOfsrc[dataUser.favoriteMemory].format;
-}
+} ;
 
 function makeInvisible(cardNumber){
     let imageNumber = cardNumber ;
@@ -153,10 +154,31 @@ function makeInvisible(cardNumber){
     cards[cardNumber-1].classList.remove("visible") ;
     if (cardNumber > 6) {imageNumber = imageNumber -6 ;}
     cards[cardNumber-1].style.backgroundImage = `url(./images/ressources1/question.svg`;}
-}
+} ;
 
 function showPair(){
     console.log("show must go on")
     timeoutID1 = setTimeout(makeInvisible, 3000, card1);
     timeoutID2 = setTimeout(makeInvisible, 3000, card2);
+} ;
+
+function makeBoardGame() {
+    let dataUser = getUser() ;
+    let memorySizeFav = dataUser.favoriteSize ;
+    let memoryFavorite = dataUser.favoriteMemory ;
+    let totalCards = dataUser.favoriteSize ;
+
+    if (memorySizeFav > arrayOfsrc[dataUser.favoriteMemory].taille){
+        totalCards = arrayOfsrc.find (memory => {
+            memory.taille >= memorySizeFav
+        }).taille 
+    }
+    let boardGameSection = document.querySelector('.boardGame');
+    for (let i = 1; i <= totalCards; i++) {
+        let newDiv = document.createElement('div');
+        newDiv.id = i;
+        newDiv.classList.add('memoryCard');
+        boardGameSection.appendChild(newDiv);
+}
+    console.log(totalCards) ;
 }
