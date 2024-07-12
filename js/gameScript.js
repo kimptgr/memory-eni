@@ -1,3 +1,5 @@
+import { getRandom } from './utils/random.js';
+
 window.onload = init ;
 var cards ;
 var btnStart ;
@@ -53,7 +55,7 @@ let arrayOfsrc = [
 ] ;
 
 function showAllCards(){
-        favMemSrc = arrayOfsrc[dataUser.favoriteMemory] ;
+       let favMemSrc = arrayOfsrc[dataUser.favoriteMemory] ;
         cards.forEach((card, index) => {
             if (index < 6 ) {
                 pathImage =  arrayOfsrc[dataUser.favoriteMemory].path + (index + 1) + arrayOfsrc[dataUser.favoriteMemory].format ;
@@ -135,12 +137,6 @@ function clickCard(e){
                 h1Game.innerText = "Tu as gagné en "+ nbShot/2 + " manches !" ;
              }
     } 
-}
-
-function getRandom(max){
-    let randomNumber = Math.floor(Math.random()*max) ;
-    return randomNumber ;
-
 }
 
 function makeVisible(cardNumber){
