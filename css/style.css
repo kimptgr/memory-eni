@@ -45,7 +45,7 @@ html, body {
     padding: 10px;
 background: linear-gradient(45deg, rgba(212,170,255,1) 17%, rgba(187,242,255,1) 84%, rgba(255,255,255,1) 100%);
 
-    @media (orientation: landscape) {
+    /* @media (orientation: landscape) {
     grid-template-columns: repeat(4, 20vmin);
     grid-template-rows: repeat(3, 20vmin);
 }
@@ -53,7 +53,7 @@ background: linear-gradient(45deg, rgba(212,170,255,1) 17%, rgba(187,242,255,1) 
     @media (orientation: portrait) {
         grid-template-columns: repeat(3, 30vmin);
         grid-template-rows: repeat(4, 30vmin);
-    }
+    } */
     gap: 5px;
 }
 

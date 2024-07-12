@@ -57,14 +57,20 @@ let arrayOfsrc = [
 ] ;
 
 function showAllCards(){
-       let favMemSrc = arrayOfsrc[dataUser.favoriteMemory] ;
+    let favMemSrc = arrayOfsrc[dataUser.favoriteMemory] ;
+    let totalCards = dataUser.favoriteSize ;
+    let indexOfMemory = dataUser.favoriteMemory ;
+    if (totalCards > favMemSrc.taille){
+        indexOfMemory = arrayOfsrc.findIndex((memory) => (memory.taille == totalCards ))
+       }
+
         cards.forEach((card, index) => {
-            if (index < 6 ) {
-                pathImage =  arrayOfsrc[dataUser.favoriteMemory].path + (index + 1) + arrayOfsrc[dataUser.favoriteMemory].format ;
+            if (index < totalCards/2 ) {
+                pathImage =  arrayOfsrc[indexOfMemory].path + (index + 1) + arrayOfsrc[indexOfMemory].format ;
             card.style.backgroundImage = pathImage ;
             }
             else {
-                pathImage = favMemSrc.path + (index - 5) + favMemSrc.format ;
+                pathImage = arrayOfsrc[indexOfMemory].path + (index - ((totalCards/2)-1)) + arrayOfsrc[indexOfMemory].format ;
             card.style.backgroundImage = pathImage;
         }
     } )
@@ -167,18 +173,25 @@ function makeBoardGame() {
     let memorySizeFav = dataUser.favoriteSize ;
     let memoryFavorite = dataUser.favoriteMemory ;
     let totalCards = dataUser.favoriteSize ;
-
-    if (memorySizeFav > arrayOfsrc[dataUser.favoriteMemory].taille){
-        totalCards = arrayOfsrc.find (memory => {
-            memory.taille >= memorySizeFav
-        }).taille 
-    }
+    let totalRow ;
+    let totalColumn ;
+    let sizeCase ;
     let boardGameSection = document.querySelector('.boardGame');
+    
+    if (totalCards == 12 ) {sizeCase = 20 ; totalRow = 3 ; totalColumn = 4; } ;
+    if (totalCards == 16 ) {sizeCase = 20 ; totalRow = 4 ; totalColumn = 4;} ;
+    if (totalCards == 20 ) {sizeCase = 15 ; totalRow = 4 ; totalColumn = 5 ;} ;
+    
+    boardGameSection.style.gridTemplateColumns = `repeat(${totalColumn}, ${sizeCase}vmin)`;
+    boardGameSection.style.gridTemplateRows = `repeat(${totalRow}, ${sizeCase}vmin)`;
     for (let i = 1; i <= totalCards; i++) {
         let newDiv = document.createElement('div');
         newDiv.id = i;
         newDiv.classList.add('memoryCard');
         boardGameSection.appendChild(newDiv);
 }
-    console.log(totalCards) ;
+
+
+
+    console.log(sizeCase) ;
 }
