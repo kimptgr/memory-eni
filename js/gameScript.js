@@ -10,6 +10,7 @@ var urlImage = 'url("./images/ressources1/memory-legume/' ;
 var imageType = '.svg")' ;
 var dataUser ;
 var pathImage ;
+var totalCards = 0;
 
 function init(){
     makeBoardGame() ;
@@ -58,7 +59,7 @@ let arrayOfsrc = [
 
 function showAllCards(){
     let favMemSrc = arrayOfsrc[dataUser.favoriteMemory] ;
-    let totalCards = dataUser.favoriteSize ;
+    totalCards = dataUser.favoriteSize ;
     let indexOfMemory = dataUser.favoriteMemory ;
     if (totalCards > favMemSrc.taille){
         indexOfMemory = arrayOfsrc.findIndex((memory) => (memory.taille == totalCards ))
@@ -85,7 +86,7 @@ function playgame(){
     nbShot = 0 ;
     cards.forEach(card => {
         card.style.backgroundImage = "url(./images/ressources1/question.svg" ;
-        card.style.order = getRandom(11) ;
+        card.style.order = getRandom(totalCards-1) ;
         card.addEventListener("click", clickCard) ;
         card.classList.remove("visible") ;
     });
@@ -118,14 +119,14 @@ function clickCard(e){
             clearTimeout(timeoutID2);
             makeInvisible(card1);
             makeInvisible(card2);
-            makeVisible(cardNumber)
+            makeVisible(cardNumber) ;
             firstCardCliked = cardNumber ;
             card1 = firstCardCliked ;
         }
         else { // 2eme
             makeVisible(cardNumber);
             card2 = cardNumber ;
-            if((cardNumber == (firstCardCliked - 6)) || (firstCardCliked == (cardNumber - 6)) ){ // paire ok
+            if((cardNumber == (firstCardCliked - (totalCards/2))) || (firstCardCliked == (cardNumber - (totalCards/2))) ){ // paire ok
                 card1 = undefined ; 
                 card2 = undefined ;
                 cardVisible += 2 ;
@@ -139,7 +140,7 @@ function clickCard(e){
             let h6 = document.querySelector("h6") ;
             h6.innerText = "Manche " + Math.round(nbShot/2) ;
 
-            if (cardVisible === 12){
+            if (cardVisible === totalCards){
                 let h1Game = document.querySelector("h1") ;
                 h1Game.innerText = "Tu as gagné en "+ nbShot/2 + " manches !" ;
              }
@@ -148,17 +149,19 @@ function clickCard(e){
 
 function makeVisible(cardNumber){
     let imageNumber = cardNumber ;
+    console.log(totalCards/2) ; 
 
     cards[cardNumber-1].classList.add("visible") ;
-    if (cardNumber > 6) {imageNumber = imageNumber -6 ;}
-    cards[cardNumber-1].style.backgroundImage = arrayOfsrc[dataUser.favoriteMemory].path +imageNumber+ arrayOfsrc[dataUser.favoriteMemory].format;
+    if (cardNumber > (totalCards/2)) {
+        imageNumber = imageNumber - (totalCards/2) } ;
+    cards[cardNumber-1].style.backgroundImage = arrayOfsrc[dataUser.favoriteMemory].path + imageNumber + arrayOfsrc[dataUser.favoriteMemory].format;
 } ;
 
 function makeInvisible(cardNumber){
     let imageNumber = cardNumber ;
    if(cardNumber !== undefined ){
     cards[cardNumber-1].classList.remove("visible") ;
-    if (cardNumber > 6) {imageNumber = imageNumber -6 ;}
+    if (cardNumber > totalCards/2) {imageNumber = imageNumber - (totalCards/2) } ;
     cards[cardNumber-1].style.backgroundImage = `url(./images/ressources1/question.svg`;}
 } ;
 
