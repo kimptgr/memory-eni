@@ -17,7 +17,7 @@ function init() {
 // Faire un bouton pour changer image, l'enregistrer dans les localstorage
 //===============================get a random profil image 
 function getPkmn(){
-    let valuePkmn = getRandom(300); ;
+    let valuePkmn = getUser().imgProfil;
     const URL = "https://pokeapi.co/api/v2/pokemon/" ;
     try {
         fetch( URL+ valuePkmn)

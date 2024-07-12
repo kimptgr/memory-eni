@@ -21,8 +21,14 @@ let userData = {
     mail: "",
     pwd: "",
     favoriteMemory: 0,
-    favoriteSize: 12
+    favoriteSize: 12,
+    imgProfil: getRandom(300)
 };
+
+function getRandom(max){
+    let randomNumber = Math.floor(Math.random()*max) ;
+    return randomNumber
+}
 
 var isNameOk = false ;
 var isMailOk = false ;
@@ -82,6 +88,7 @@ function verifyValidity(e){
             moyen.style.display = "none" ;
             fort.style.display = "none" ;
         };
+        
         if (
             CARACSPE.test(passwordToVerify) &&
             MINUSCULE.test(passwordToVerify) && 
