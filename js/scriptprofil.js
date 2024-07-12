@@ -17,7 +17,7 @@ function init() {
 // Faire un bouton pour changer image, l'enregistrer dans les localstorage
 //===============================get a random profil image 
 function getPkmn(){
-    let valuePkmn = getRandom(300); ;
+    let valuePkmn = getUser().imgProfil;
     const URL = "https://pokeapi.co/api/v2/pokemon/" ;
     try {
         fetch( URL+ valuePkmn)
@@ -34,10 +34,6 @@ function showPkmn(data){
     NEWIMG.setAttribute("src", data.sprites.front_default) ;
 }
 
-function getRandom(max){
-    let randomNumber = Math.floor(Math.random()*max) ;
-    return randomNumber 
-}
 //==========================================================================
 function getUser() {
     if (document.cookie){
@@ -74,7 +70,7 @@ function showUser(user) {
 } ;
 
 function showMemory() {
-    let arrayOfmemoImgSrc = ["./images/ressources1/memory-legume/memory_detail.png", "./images/ressources1/animauxAnimes/memory_detail_animaux_animes.png", "./images/ressources1/dinosaures/memory_detail_dinosaures.png"] ;
+    let arrayOfmemoImgSrc = ["./images/ressources1/memory-legume/memory_detail.png", "./images/ressources1/animauxAnimes/memory_detail_animaux_animes.png", "./images/ressources1/dinosauresAvecNom/"] ;
     let memorImg = document.getElementById("memorImg") ;
     let selectFavoriteMemory = document.getElementById("favoriteMemory")
     memorImg.src = `${arrayOfmemoImgSrc[selectFavoriteMemory.value]}` ;

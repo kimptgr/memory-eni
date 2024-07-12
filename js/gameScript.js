@@ -1,3 +1,6 @@
+"use-strict" ;
+import { getRandom } from './utils/random.js';
+
 window.onload = init ;
 var cards ;
 var btnStart ;
@@ -9,6 +12,7 @@ var dataUser ;
 var pathImage ;
 
 function init(){
+    makeBoardGame() ;
     cards = document.querySelectorAll(".memoryCard") ;
     // btnStart = document.querySelector(".btnStart") ;
     // btnStart.addEventListener("click", playgame) ;
@@ -53,15 +57,20 @@ let arrayOfsrc = [
 ] ;
 
 function showAllCards(){
-        favMemSrc = arrayOfsrc[dataUser.favoriteMemory] ;
+    let favMemSrc = arrayOfsrc[dataUser.favoriteMemory] ;
+    let totalCards = dataUser.favoriteSize ;
+    let indexOfMemory = dataUser.favoriteMemory ;
+    if (totalCards > favMemSrc.taille){
+        indexOfMemory = arrayOfsrc.findIndex((memory) => (memory.taille == totalCards ))
+       }
+
         cards.forEach((card, index) => {
-            if (index < 6 ) {
-                pathImage =  arrayOfsrc[dataUser.favoriteMemory].path + (index + 1) + arrayOfsrc[dataUser.favoriteMemory].format ;
-                console.log(pathImage) ;
+            if (index < totalCards/2 ) {
+                pathImage =  arrayOfsrc[indexOfMemory].path + (index + 1) + arrayOfsrc[indexOfMemory].format ;
             card.style.backgroundImage = pathImage ;
             }
             else {
-                pathImage = favMemSrc.path + (index - 5) + favMemSrc.format ;
+                pathImage = arrayOfsrc[indexOfMemory].path + (index - ((totalCards/2)-1)) + arrayOfsrc[indexOfMemory].format ;
             card.style.backgroundImage = pathImage;
         }
     } )
@@ -137,19 +146,13 @@ function clickCard(e){
     } 
 }
 
-function getRandom(max){
-    let randomNumber = Math.floor(Math.random()*max) ;
-    return randomNumber ;
-
-}
-
 function makeVisible(cardNumber){
     let imageNumber = cardNumber ;
 
     cards[cardNumber-1].classList.add("visible") ;
     if (cardNumber > 6) {imageNumber = imageNumber -6 ;}
     cards[cardNumber-1].style.backgroundImage = arrayOfsrc[dataUser.favoriteMemory].path +imageNumber+ arrayOfsrc[dataUser.favoriteMemory].format;
-}
+} ;
 
 function makeInvisible(cardNumber){
     let imageNumber = cardNumber ;
@@ -157,10 +160,38 @@ function makeInvisible(cardNumber){
     cards[cardNumber-1].classList.remove("visible") ;
     if (cardNumber > 6) {imageNumber = imageNumber -6 ;}
     cards[cardNumber-1].style.backgroundImage = `url(./images/ressources1/question.svg`;}
-}
+} ;
 
 function showPair(){
     console.log("show must go on")
     timeoutID1 = setTimeout(makeInvisible, 3000, card1);
     timeoutID2 = setTimeout(makeInvisible, 3000, card2);
+} ;
+
+function makeBoardGame() {
+    let dataUser = getUser() ;
+    let memorySizeFav = dataUser.favoriteSize ;
+    let memoryFavorite = dataUser.favoriteMemory ;
+    let totalCards = dataUser.favoriteSize ;
+    let totalRow ;
+    let totalColumn ;
+    let sizeCase ;
+    let boardGameSection = document.querySelector('.boardGame');
+    
+    if (totalCards == 12 ) {sizeCase = 20 ; totalRow = 3 ; totalColumn = 4; } ;
+    if (totalCards == 16 ) {sizeCase = 20 ; totalRow = 4 ; totalColumn = 4;} ;
+    if (totalCards == 20 ) {sizeCase = 15 ; totalRow = 4 ; totalColumn = 5 ;} ;
+    
+    boardGameSection.style.gridTemplateColumns = `repeat(${totalColumn}, ${sizeCase}vmin)`;
+    boardGameSection.style.gridTemplateRows = `repeat(${totalRow}, ${sizeCase}vmin)`;
+    for (let i = 1; i <= totalCards; i++) {
+        let newDiv = document.createElement('div');
+        newDiv.id = i;
+        newDiv.classList.add('memoryCard');
+        boardGameSection.appendChild(newDiv);
+}
+
+
+
+    console.log(sizeCase) ;
 }
