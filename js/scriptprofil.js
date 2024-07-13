@@ -66,7 +66,14 @@ function showUser(user) {
     // inputFavMem.setAttribute("value", user.favoriteMemory) ;
     
     let inputFavSize = document.getElementById("favoriteSize") ;
-    inputFavSize.setAttribute("value", user.favoriteSize) ;
+ //   inputFavSize.setAttribute("value", user.favoriteSize) ;
+
+    for (let i = 0; i < inputFavSize.options.length; i++) {
+        if (inputFavSize.options[i].value === user.favoriteSize) {
+            inputFavSize.options[i].selected = true;
+            break;
+        }
+    }
 } ;
 
 function showMemory() {
