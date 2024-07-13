@@ -22,7 +22,8 @@ let userData = {
     pwd: "",
     favoriteMemory: 0,
     favoriteSize: 12,
-    imgProfil: getRandom(300)
+    imgProfil: getRandom(300),
+    score: []
 };
 
 function getRandom(max){
@@ -158,12 +159,12 @@ function createAccount(e){
     ){
         window.location.href = "./game.html"
         const newContent = document.createTextNode(`Bienvenue ${userData.name}, have fun !`);
-        NEW_P.appendChild(newContent)
-        saveUser(userData)
+        NEW_P.appendChild(newContent);
+        saveUser(userData) ;
     }
     else {
         const newContent = document.createTextNode(`Merci de remplir correctement le formulaire`);
-        NEW_P.appendChild(newContent)
+        NEW_P.appendChild(newContent);
     }
     
     let btnInscription = e.target ;
@@ -179,7 +180,7 @@ function saveUser(userData) {
       users.push(userData) ;
     }
     else {
-        users = [userData]
+        users = [userData] ;
     }
     localStorage.setItem("users", JSON.stringify(users));
     window.location.href = "./connexion.html" ;
@@ -187,6 +188,8 @@ function saveUser(userData) {
     // document.cookie = `currentUser=${currentUser}` ;
 }
 
+
+// CC 
 function checkIfUsed(key, value) {
     let usersJSON = localStorage.getItem("users");
     let users = JSON.parse(usersJSON) ;
