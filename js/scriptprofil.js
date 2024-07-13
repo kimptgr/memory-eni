@@ -1,20 +1,38 @@
+"use strict";
+
 window.onload = init ;
 var dataUser ;
 
 function init() {
     if (getUser()){
+        dataUser = getUser() ;
          showUser(getUser()) ;
+         console.log(dataUser) ;
     }
         else
         window.location.href = "./inscription.html" ;
     getPkmn() ;
     let selectFavoriteMemory = document.getElementById("favoriteMemory") ;
     selectFavoriteMemory.addEventListener("change", showMemory) ;
-    
+
+    let fields = document.querySelectorAll("input, select") ;
+
     let btnModif = document.getElementById("btnModification") ;
-    btnModif.addEventListener("click", saveNewData)
+    btnModif.addEventListener("click", saveNewData) ;
+
+    btnModif.setAttribute("disabled", "") ;
+    fields.forEach((field) => {
+        field.addEventListener("change", enabledbtn);
+        field.addEventListener("input", enabledbtn)
+}) ;
+}
+
+function enabledbtn(){
+    let btnModif = document.getElementById("btnModification") ;
+    btnModif.removeAttribute("disabled");
 }
 // Faire un bouton pour changer image, l'enregistrer dans les localstorage
+// un badge
 //===============================get a random profil image 
 function getPkmn(){
     let valuePkmn = getUser().imgProfil;
@@ -93,26 +111,18 @@ function saveNewData(e) {
 
     let usersJSON = localStorage.getItem("users");
     let users = JSON.parse(usersJSON) ;
-
     let currentUser = getUser() ;
-    let currentUserIndex ;
-    //get index du currentuser
-    users.forEach((user, index) => {
-        if(user["name"] == currentUser.name){
-            currentUserIndex = index ;
-        }
-    })
-
-    // check if changement ds le formulaire, if are ok
-    const MAILREGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/ ;
-
+    let currentUserIndex = users.findIndex( user => user.name === currentUser.name) ;
+    
     if(inputName !== users[currentUserIndex].name 
         && !checkIfUsed("name", inputName)
         && inputName.length >= 3 
     ){
         currentUser.name = inputName ;
     }
-    if(inputMail !== users[currentUserIndex] 
+    
+    const MAILREGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/ ;
+    if(inputMail !== users[currentUserIndex].mail
         && !checkIfUsed("mail", inputMail)
         && MAILREGEX.test(inputMail)
     ){
@@ -131,9 +141,21 @@ function saveNewData(e) {
 
     // replace cookie puis charge new User
 
-    currentUserInJSON = JSON.stringify(currentUser) ;
+    let currentUserInJSON = JSON.stringify(currentUser) ;
     document.cookie = `currentUser=${currentUserInJSON}`;
-    alert("Changements enregistrées !") ;
+
+    if (inputName === users[currentUserIndex].name
+        && inputMail === users[currentUserIndex].mail
+        && inputFavMem === users[currentUserIndex].favoriteMemory
+        && inputFavSize === users[currentUserIndex].favoriteSize
+    ){
+        e.target.setAttribute("disabled", "") ;
+        alert("Pas de changements détectés.")
+        
+    } else {
+        alert("Changements enregistrées !") ;
+    }
+
     showUser(getUser()) ;
 }
 
@@ -150,3 +172,5 @@ function checkIfUsed(key, value) {
     });}
     return isUsed
 }
+
+//TODO Si pas de changements mais qu'on clique rien ne se passe

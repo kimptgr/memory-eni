@@ -38,10 +38,10 @@
             </div>
             <form class="needs-validation" novalidate>
                 <div class="mb-3">
-                    <label for="name">Nom d'utilisateur</label>
+                    <label for="name">Nom d'utilisateur·rice</label>
                     <input class="form-control" type="text" name="name" id="name">
                 </div>
-                <div class=" mb-3">
+                <div class="mb-3">
                     <label for="mail">Email</label>
                     <input class="form-control" type="email" name="mail" id="mail">
                 </div>
@@ -50,7 +50,7 @@
                     <select class="form-control mb-3" name="favoriteMemory" id="favoriteMemory">
                         <option value="0">Légumes</option>
                         <option value="1">Animaux animés</option>
-                        <option value="2">Les dinooooo</option>
+                        <option value="2">Dinooooos</option>
                     </select>
                     <div class="text-center mb-3">
                         <img id="memorImg" class="img-fluid">
@@ -64,8 +64,26 @@
                         <option value="20">5*4</option>
                     </select>
                 </div>
-                <button id="btnModification" class="btn btn-secondary"> Enregistrer les modifications</button>
+                <button id="btnModification" class="btn btn-secondary" disabled> Enregistrer les modifications</button>
             </form>
+                <h2>Derniers Scores :</h2>
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>Pseudo</th>
+                        <th>Score</th>
+                        <th>Taille</th>
+                        <th>Choix Memory</th>
+                        <th>Date</th>
+                    </tr>
+                    <tr>
+                        <td>Ali</td>
+                        <td>15</td>
+                        <td>4*3</td>
+                        <td>Légumes</td>
+                        <td>13/07/2024</td>
+                    </tr>
+                </table>
+
           </div>
     </main>
     </body>
