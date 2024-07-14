@@ -18,12 +18,12 @@ function init() {
 
     let fields = document.querySelectorAll("input");
     fields.forEach((field) => {
-        field.addEventListener("input", (e) => verifyValidity(e.target.name, e.target.value));
+        field.addEventListener("input", (e) => verifyValidity(e.target.name, e.target.value, "btnModification"));
     });
 
     fields = document.querySelectorAll("select");
     fields.forEach((field) => {
-        field.addEventListener("change", (e) => changePreferences(e.target.name, e.target.value));
+        field.addEventListener("change", (e) => changePreferences(e.target.name, e.target.value, "btnModification"));
     });
 }
 
@@ -131,30 +131,6 @@ function saveNewData(e) {
     let currentUser = getUser();
     let currentUserIndex = users.findIndex(user => user.name === currentUser.name);
 
-    if (inputName !== users[currentUserIndex].name
-        && !checkIfUsed("name", inputName)
-        && inputName.length >= 3
-    ) {
-        currentUser.name = inputName;
-
-    }
-
-    const MAILREGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (inputMail !== users[currentUserIndex].mail
-        && !checkIfUsed("mail", inputMail)
-        && MAILREGEX.test(inputMail)
-    ) {
-        currentUser.mail = inputMail;
-    }
-    if (inputFavMem !== users[currentUserIndex].favoriteMemory) {
-        currentUser.favoriteMemory = inputFavMem;
-    }
-    if (inputFavSize != users[currentUserIndex].favoriteSize) {
-        currentUser.favoriteSize = inputFavSize;
-    }
-
-
-
     if (inputName === users[currentUserIndex].name
         && inputMail === users[currentUserIndex].mail
         && inputFavMem === users[currentUserIndex].favoriteMemory
@@ -162,12 +138,16 @@ function saveNewData(e) {
     ) {
         e.target.setAttribute("disabled", "");
         alert("Pas de changements détectés.")
-
     }
-    else if (!checkAllInputValidity()) {
+    else if (!checkAllInputValidity()){
         alert("Champs invalids");
     }
     else {
+        currentUser.name = inputName;
+        currentUser.mail = inputMail;
+        currentUser.favoriteMemory = inputFavMem;
+        currentUser.favoriteSize = inputFavSize;
+
         //Update change 
         users[currentUserIndex] = currentUser;
         localStorage.setItem("users", JSON.stringify(users));
@@ -195,33 +175,34 @@ function checkIfUsed(key, value) {
     }
     return isUsed
 }
-
 /////////////////////////CCOLLER/////////////////////////////////////
-function verifyValidity(inputName, inputValue) {
+// Fonction who verifiy if data change, if its correct and change the input and the btn submit
+// fct qui prend trois arguments le type de donnée à vérifier, la donnée et l'id du bouton de soumission
+// 
+
+function verifyValidity(inputName, inputValue, btnID) {
     let feedback = document.querySelector("#" + inputName + "+ p");
     let currentUser = getUser();
+
     switch (inputName) {
         case "name":
             if (inputValue.length < 3) {
-                console.log("j'entre dans le verifyvalidity");
                 feedback.textContent = "3 caractères minimum";
                 invalidInput(inputName);
-                disabledbtn();
+                disabledbtn(btnID);
             }
             else if (inputValue === currentUser.name) {
-                console.log("comme avvant");
                 normalizeInput(inputName);
-                disabledbtn();
+                disabledbtn(btnID);
             }
             else if (checkIfUsed("name", inputValue)) {
                 feedback.textContent = "Nom déjà pris.";
                 invalidInput(inputName);
-                disabledbtn();
-                console.log("déjà utilisé");
+                disabledbtn(btnID);
             }
             else {
                 validInput(inputName);
-                enabledbtn();
+                enabledbtn(btnID);
             }
             break;
 
@@ -230,22 +211,20 @@ function verifyValidity(inputName, inputValue) {
             if (!MAILREGEX.test(inputValue)) {
                 feedback.textContent = "Mail incorrect";
                 invalidInput(inputName);
-                disabledbtn();
+                disabledbtn(btnID);
             }
             else if (inputValue === currentUser.mail) {
-                console.log("comme avant");
                 normalizeInput(inputName);
-                disabledbtn();
+                disabledbtn(btnID);
             }
             else if (checkIfUsed("mail", inputValue)) {
                 feedback.textContent = "Mail déjà utilisé.";
                 invalidInput(inputName);
-                disabledbtn();
-                console.log("déjà utilisé");
+                disabledbtn(btnID);
             }
             else {
                 validInput(inputName);
-                enabledbtn();
+                enabledbtn(btnID);
             }
             break;
 
@@ -254,23 +233,21 @@ function verifyValidity(inputName, inputValue) {
     }
 }
 
-function changePreferences(inputName, inputValue) {
+function changePreferences(inputName, inputValue, btnID) {
     let userData = getUser() ;
     if (inputValue === userData[inputName]){
-        disabledbtn();
+        disabledbtn(btnID);
     }
     else {
-        enabledbtn() ;}
+        enabledbtn(btnID) ;}
 }
+
 function checkAllInputValidity() {
     let allValid = true;
-    console.log("je check que tout est valide") ;
     let fields = document.querySelectorAll("input");
     fields.forEach((field) => {
-        console.log(field);
         if (field.classList.contains("is-invalid")) {
             allValid = false;
-            console.log("Ja'ai vu que y'a 1 faux");
             return;
         }
     });
@@ -279,24 +256,23 @@ function checkAllInputValidity() {
 
 function normalizeInput(id) {
     let element = document.getElementById(id);
+    if (element !== null) {
     element.classList.remove("is-valid");
-    element.classList.remove("is-invalid");
+    element.classList.remove("is-invalid");}
 }
 // CCOLLER##########################Mais avec modif
 function invalidInput(id) {
     let element = document.getElementById(id);
+    if (element !== null) {
     element.classList.remove("is-valid");
     element.classList.add("is-invalid");
-    // userData[id] = "" ;
-    return false;
+    return false;}
 }
 
 function validInput(id) {
     let element = document.getElementById(id);
-    element.classList.add("is-valid");
+    if (element !== null) {element.classList.add("is-valid");
     element.classList.remove("is-invalid");
     // if (id !== confirmPassword){ userData[id] = element.value ;} ;
-    return true;
+    return true;}
 }
-
-//TODO Si pas de changements mais qu'on clique rien ne se passe
