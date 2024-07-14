@@ -9,6 +9,7 @@ function init() {
     if (!getUser()) window.location.href = "./inscription.html";
     dataUser = getUser();
     showUser(dataUser);
+    showScores(dataUser);
 
     let btnProfilPicture = document.getElementById("randomImg");
     btnProfilPicture.addEventListener("click", changePicture);
@@ -46,6 +47,7 @@ function getUser() {
 function showUser(user) {
     let valuePkmn = dataUser.imgProfil ;
     getPkmn(valuePkmn);
+    newPkmValue = valuePkmn ;
 
     let inputName = document.getElementById("name");
     inputName.setAttribute("value", user.name);
@@ -69,8 +71,6 @@ function showUser(user) {
         }
     }
     showMemory();
-
-    //TODO Fill with scores
 };
 
 function showMemory() {
@@ -79,6 +79,38 @@ function showMemory() {
     let selectFavoriteMemory = document.getElementById("favoriteMemory")
     memorImg.src = `${arrayOfmemoImgSrc[selectFavoriteMemory.value]}`;
 };
+
+function showScores(dataUser){
+// .scores = [{
+//     pseudo: inputName, 
+//     score: 25,
+//     taille:"5*4",
+//     memory: "Dinos",
+//     date: "14/07/2024"
+// }, {
+//     pseudo: inputName, 
+//     score: 15,
+//     taille:"3*4",
+//     memory: "Légumes",
+//     date: "12/07/2024"
+// }];
+    let scores = dataUser.scores ;
+
+    if (dataUser.scores !== null && dataUser.scores !== undefined ){
+    let scoreTable = document.querySelector("#scoreTable > tbody") ;
+    scores.forEach((score) => {
+        const NEWTR = document.createElement("tr") ;
+        Object.values(score).forEach(value => {
+            const NEWTD = document.createElement("td") ;
+            const NEWCONTENT = document.createTextNode(value);
+            NEWTD.appendChild(NEWCONTENT) ; 
+            NEWTR.appendChild(NEWTD) ;
+        }
+    )
+    scoreTable.appendChild(NEWTR) ;
+    })
+    }
+}
 
 function changePicture() {
     
@@ -127,6 +159,7 @@ function saveNewData(e) {
         && inputMail === users[currentUserIndex].mail
         && inputFavMem === users[currentUserIndex].favoriteMemory
         && inputFavSize === users[currentUserIndex].favoriteSize
+        && dataUser.imgProfil === newPkmValue
     ) {
         e.target.setAttribute("disabled", "");
         alert("Pas de changements détectés.")
@@ -139,6 +172,24 @@ function saveNewData(e) {
         currentUser.mail = inputMail;
         currentUser.favoriteMemory = inputFavMem;
         currentUser.favoriteSize = inputFavSize;
+        currentUser.imgProfil = newPkmValue;
+
+        // //#################################POUR TESTER SHOWSCORE
+        // currentUser.scores = [{
+        //     pseudo: inputName, 
+        //     score: 25,
+        //     taille:"5*4",
+        //     memory: "Dinos",
+        //     date: "14/07/2024"
+        // }, {
+        //     pseudo: inputName, 
+        //     score: 15,
+        //     taille:"3*4",
+        //     memory: "Légumes",
+        //     date: "12/07/2024"
+        // }];
+
+        // //#######################################################
 
         //Update change 
         users[currentUserIndex] = currentUser;
@@ -228,7 +279,6 @@ function verifyValidity(inputName, inputValue, btnID) {
 function changePreferences(inputName, inputValue, btnID) {
     let userData = getUser() ;
     let element = document.getElementById(inputName) ;
-    console.log(inputName);
     if (inputValue === userData[inputName]){
         element.classList.remove("is-valid");
         changeBtnSubmit(btnID);
