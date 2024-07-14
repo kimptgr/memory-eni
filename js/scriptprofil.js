@@ -1,13 +1,17 @@
 "use strict";
+import { getRandom } from "./utils/random.js";
 
 window.onload = init;
 var dataUser;
+var newPkmValue ;
 
 function init() {
     if (!getUser()) window.location.href = "./inscription.html";
-    console.log(dataUser);
     dataUser = getUser();
     showUser(dataUser);
+
+    let btnProfilPicture = document.getElementById("randomImg");
+    btnProfilPicture.addEventListener("click", changePicture);
 
     let selectFavoriteMemory = document.getElementById("favoriteMemory");
     selectFavoriteMemory.addEventListener("change", showMemory);
@@ -18,12 +22,12 @@ function init() {
 
     let fields = document.querySelectorAll("input");
     fields.forEach((field) => {
-        field.addEventListener("input", (e) => verifyValidity(e.target.name, e.target.value, "btnModification"));
+        field.addEventListener("input", (e) => verifyValidity(e.target.name, e.target.value, btnModif));
     });
 
     fields = document.querySelectorAll("select");
     fields.forEach((field) => {
-        field.addEventListener("change", (e) => changePreferences(e.target.name, e.target.value, "btnModification"));
+        field.addEventListener("change", (e) => changePreferences(e.target.name, e.target.value, btnModif));
     });
 }
 
@@ -76,27 +80,15 @@ function showMemory() {
     memorImg.src = `${arrayOfmemoImgSrc[selectFavoriteMemory.value]}`;
 };
 
-function enabledbtn() {
-    let userData = getUser() ;
-    let selectFavoriteMemory = document.getElementById("favoriteMemory") ;
-    let selectFavoriteSize = document.getElementById("favoriteSize")
-    let btnModif = document.getElementById("btnModification");
-    if (checkAllInputValidity() &&
-        (selectFavoriteMemory.value !== userData.favoriteMemory
-    || selectFavoriteSize !== userData.favoriteSize)
-) {
-    btnModif.removeAttribute("disabled");}
+function changePicture() {
+    
+let btnModif = document.getElementById("btnModification");
+    newPkmValue = getRandom(300) ;
+    getPkmn(newPkmValue) ;
+    validInput("randomImg");
+    changeBtnSubmit(btnModif);
 }
 
-function disabledbtn() {
-    let btnModif = document.getElementById("btnModification");
-    btnModif.setAttribute("disabled", "");
-}
-////////////////////////////////////////////////////////////////////////
-// TODO Faire un bouton pour changer image
-/////////////////////////////////////////////////////////////////////////
-
-// Give to user a random profil picture
 function getPkmn(valuePkmn) {
     
     const URL = "https://pokeapi.co/api/v2/pokemon/";
@@ -189,20 +181,20 @@ function verifyValidity(inputName, inputValue, btnID) {
             if (inputValue.length < 3) {
                 feedback.textContent = "3 caractères minimum";
                 invalidInput(inputName);
-                disabledbtn(btnID);
+                changeBtnSubmit(btnID);
             }
             else if (inputValue === currentUser.name) {
                 normalizeInput(inputName);
-                disabledbtn(btnID);
+                changeBtnSubmit(btnID);
             }
             else if (checkIfUsed("name", inputValue)) {
                 feedback.textContent = "Nom déjà pris.";
                 invalidInput(inputName);
-                disabledbtn(btnID);
+                changeBtnSubmit(btnID);
             }
             else {
                 validInput(inputName);
-                enabledbtn(btnID);
+                changeBtnSubmit(btnID);
             }
             break;
 
@@ -211,20 +203,20 @@ function verifyValidity(inputName, inputValue, btnID) {
             if (!MAILREGEX.test(inputValue)) {
                 feedback.textContent = "Mail incorrect";
                 invalidInput(inputName);
-                disabledbtn(btnID);
+                changeBtnSubmit(btnID);
             }
             else if (inputValue === currentUser.mail) {
                 normalizeInput(inputName);
-                disabledbtn(btnID);
+                changeBtnSubmit(btnID);
             }
             else if (checkIfUsed("mail", inputValue)) {
                 feedback.textContent = "Mail déjà utilisé.";
                 invalidInput(inputName);
-                disabledbtn(btnID);
+                changeBtnSubmit(btnID);
             }
             else {
                 validInput(inputName);
-                enabledbtn(btnID);
+                changeBtnSubmit(btnID);
             }
             break;
 
@@ -235,11 +227,15 @@ function verifyValidity(inputName, inputValue, btnID) {
 
 function changePreferences(inputName, inputValue, btnID) {
     let userData = getUser() ;
+    let element = document.getElementById(inputName) ;
+    console.log(inputName);
     if (inputValue === userData[inputName]){
-        disabledbtn(btnID);
+        element.classList.remove("is-valid");
+        changeBtnSubmit(btnID);
     }
     else {
-        enabledbtn(btnID) ;}
+        element.classList.add("is-valid") ;}
+        changeBtnSubmit(btnID);
 }
 
 function checkAllInputValidity() {
@@ -252,6 +248,30 @@ function checkAllInputValidity() {
         }
     });
     return allValid;
+}
+
+function oneIsChanged() {
+    let fields = document.querySelectorAll("#randomImg, input, select") ;
+    let oneIsChanged = false;
+    fields.forEach((field) => {
+        if (field.classList.contains("is-valid")) {
+            oneIsChanged = true ;
+            return;
+        }
+    });
+    return oneIsChanged;
+}
+
+function changeBtnSubmit(btnID){
+    if (!checkAllInputValidity()) {
+        btnID.setAttribute("disabled", "");   
+    }
+    else if (checkAllInputValidity() && oneIsChanged()){
+        btnID.removeAttribute("disabled");
+    }
+    else {
+        btnID.setAttribute("disabled", "");   
+    }
 }
 
 function normalizeInput(id) {
@@ -273,6 +293,5 @@ function validInput(id) {
     let element = document.getElementById(id);
     if (element !== null) {element.classList.add("is-valid");
     element.classList.remove("is-invalid");
-    // if (id !== confirmPassword){ userData[id] = element.value ;} ;
     return true;}
 }
