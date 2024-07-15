@@ -210,32 +210,49 @@ function saveParty(totalPoint) {
     console.log("score " + totalPoint);
     let today = new Date();
     let todayFormat = `${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`;
-    let memoryName = arrayOfsrc[dataUser.favoriteMemory].name;
-    let memorySize;
-    if (dataUser.favoriteSize == 12) memorySize = "4*3";
-    if (dataUser.favoriteSize == 16) memorySize = "4*4";
-    if (dataUser.favoriteSize == 20) memorySize = "5*4";
-
+    let memoryName = arrayOfsrc[indexOfMemory].name;
+    let memorySize ;
+    if (totalCards == 12) memorySize = "4*3";
+    if (totalCards == 16) memorySize = "4*4";
+    if (totalCards == 20) memorySize = "5*4";
 
     let newScore = {
         pseudo: dataUser.name,
         score: totalPoint,
         taille: memorySize,
         memory: memoryName,
-        date: todayFormat
+        date: todayFormat,
+        dateheure: today
     };
-    dataUser.score.push(newScore);
 
-    let allScoresJSON = localStorage.getItem("allScores");
+    if (dataUser["score"] !== undefined) {
+        dataUser.score.push(newScore);
+    }
+    else {
+        dataUser.score = [{newScore}] ; 
+    }
+
+    let currentMemoryScores = totalCards +"+"+indexOfMemory; 
+    let allScoresJSON = localStorage.getItem(currentMemoryScores);
     let allScores = JSON.parse(allScoresJSON);
-
     if (allScoresJSON !== null) {
         allScores.push(newScore);
+        allScores.sort((a, b) => {          
+            let dateA = new Date(a.dateheure);
+            let dateB = new Date(b.dateheure);
+        
+            if (a.score === b.score) {
+                return dateA.getTime() - dateB.getTime();
+            }
+            return a.score - b.score;
+        });
+        allScores = allScores.slice(0, 5) ;
     }
     else {
         allScores = [newScore];
     }
-    localStorage.setItem("allScores", JSON.stringify(allScores));
+    localStorage.setItem(currentMemoryScores, JSON.stringify(allScores));
+    showbestScores() ; 
 }
 
 //CCOLLER=======================
@@ -254,23 +271,28 @@ function updateUser(dataUser) {
 }
 
 function showbestScores(){
-    let allScoresJSON = localStorage.getItem("allScores");
+    let currentMemoryScores = totalCards +"+"+indexOfMemory; 
+    let allScoresJSON = localStorage.getItem(currentMemoryScores);
     let scores = JSON.parse(allScoresJSON);
-
-    if (scores !== null && scores !== undefined ){
-        let scoreTable = document.querySelector("#scoreTable > tbody") ;
+    let scoreTable = document.querySelector("#scoreTable > tbody") ;
+    while (scoreTable.firstChild) {
+        scoreTable.removeChild(scoreTable.firstChild);
+    };
+    if (scores !== null && scores !== undefined) {
         scores.forEach((score) => {
-            const NEWTR = document.createElement("tr") ;
-            Object.values(score).forEach(value => {
-                const NEWTD = document.createElement("td") ;
-                const NEWCONTENT = document.createTextNode(value);
-                NEWTD.appendChild(NEWCONTENT) ; 
-                NEWTR.appendChild(NEWTD) ;
-            }
-        )
-        scoreTable.appendChild(NEWTR) ;
-        })
-        }
+            const NEWTR = document.createElement("tr");
+    
+            Object.keys(score).forEach(key => {
+                if (key !== "dateheure") {
+                    const NEWTD = document.createElement("td");
+                    const NEWCONTENT = document.createTextNode(score[key]); // Récupérer la valeur associée à la clé
+                    NEWTD.appendChild(NEWCONTENT);
+                    NEWTR.appendChild(NEWTD);
+                }
+            });
+            scoreTable.appendChild(NEWTR);
+        });
+    }
 }
 
 function afficheSelect(){
