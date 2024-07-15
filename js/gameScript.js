@@ -13,12 +13,11 @@ var pathImage ;
 var totalCards = 0;
 
 function init(){
-    makeBoardGame() ;
-    cards = document.querySelectorAll(".memoryCard") ;
     // btnStart = document.querySelector(".btnStart") ;
     // btnStart.addEventListener("click", playgame) ;
     dataUser = getUser() ;
-    if (getUser())
+    console.log(dataUser) ;
+    if (getUser() != undefined)
         dataUser = getUser() ; 
     else
        window.location.href = "./connexion.html" ;
@@ -27,7 +26,9 @@ function init(){
         if (e.key == " "){
             playgame() ;
         }
-    })
+    }) ;
+    makeBoardGame() ;
+    cards = document.querySelectorAll(".memoryCard") ;
     showAllCards();
     
 }
