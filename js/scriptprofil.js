@@ -96,20 +96,22 @@ function showScores(dataUser){
 //     date: "12/07/2024"
 // }];
 let scores = dataUser.score ;
-    if (scores !== null && scores !== undefined ){
+if (scores !== null && scores !== undefined) {
     let scoreTable = document.querySelector("#scoreTable > tbody") ;
     scores.forEach((score) => {
-        const NEWTR = document.createElement("tr") ;
-        Object.values(score).forEach(value => {
-            const NEWTD = document.createElement("td") ;
-            const NEWCONTENT = document.createTextNode(value);
-            NEWTD.appendChild(NEWCONTENT) ; 
-            NEWTR.appendChild(NEWTD) ;
-        }
-    )
-    scoreTable.appendChild(NEWTR) ;
-    })
-    }
+        const NEWTR = document.createElement("tr");
+
+        Object.keys(score).forEach(key => {
+            if (key !== "dateheure") {
+                const NEWTD = document.createElement("td");
+                const NEWCONTENT = document.createTextNode(score[key]); // Récupérer la valeur associée à la clé
+                NEWTD.appendChild(NEWCONTENT);
+                NEWTR.appendChild(NEWTD);
+            }
+        });
+        scoreTable.appendChild(NEWTR);
+    });
+}
 }
 
 function changePicture() {
