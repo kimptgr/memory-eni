@@ -1,3 +1,4 @@
+"use strict";
 window.onload = init ;
 
 function init(){
@@ -38,6 +39,7 @@ var isConfirmOk = false ;
 
 function verifyValidity(e){
     let userInput = e.target ;
+
     switch (userInput.id) {
         case "name":
             if(userInput.value.length >= 3 
@@ -183,6 +185,8 @@ function saveUser(userData) {
     }
     localStorage.setItem("users", JSON.stringify(users));
     window.location.href = "./connexion.html" ;
+    // let currentUser = JSON.stringify(userData) ;
+    // document.cookie = `currentUser=${currentUser}` ;
 }
 
 
