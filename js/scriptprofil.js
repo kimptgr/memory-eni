@@ -6,8 +6,9 @@ var dataUser;
 var newPkmValue ;
 
 function init() {
-    if (!getUser()) window.location.href = "./inscription.html";
     dataUser = getUser();
+    console.log(dataUser === void 0) ;
+    if (dataUser === undefined) {window.location.href = "./inscription.html";}
     showUser(dataUser);
     showScores(dataUser);
 
@@ -94,9 +95,10 @@ function showScores(dataUser){
 //     memory: "Légumes",
 //     date: "12/07/2024"
 // }];
-    let scores = dataUser.scores ;
+let scores = dataUser.score ;
+console.log(scores) ; 
 
-    if (dataUser.scores !== null && dataUser.scores !== undefined ){
+    if (scores !== null && scores !== undefined ){
     let scoreTable = document.querySelector("#scoreTable > tbody") ;
     scores.forEach((score) => {
         const NEWTR = document.createElement("tr") ;

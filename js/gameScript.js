@@ -6,8 +6,6 @@ var cards;
 var btnStart;
 var nbShot;
 var firstCardCliked;
-var urlImage = 'url("./images/ressources1/memory-legume/';
-var imageType = '.svg")';
 var dataUser;
 var pathImage;
 var totalCards = 0;
@@ -17,17 +15,17 @@ function init() {
     // btnStart.addEventListener("click", playgame) ;
     dataUser = getUser();
     console.log(dataUser);
-    totalCards = dataUser.favoriteSize;
     if (dataUser === undefined)
         window.location.href = "./connexion.html";
-    // cards = document.querySelectorAll(".memoryCard") ;
     document.addEventListener("keydown", (e) => {
         if (e.key == " ") {
             playgame();
         }
     });
+    totalCards = dataUser.favoriteSize;
     makeBoardGame();
     showAllCards();
+    showbestScores();
 }
 
 function getUser() {
@@ -43,26 +41,30 @@ function getUser() {
     }
 }
 
-let arrayOfsrc = [
-    {
-        path: "url('./images/ressources1/memory-legume/",
-        format: ".svg')",
-        taille: 12
-    }, {
-        path: "url('./images/ressources1/animauxAnimes/",
-        format: ".webp')",
-        taille: 16
-    },
-    {
-        path: "url('./images/ressources1/dinosauresAvecNom/",
-        format: ".jpg')",
-        taille: 20
-    }
-];
-
+let arrayOfsrc =
+    [
+        {
+            name: "Légumes",
+            path: "url('./images/ressources1/memory-legume/",
+            format: ".svg')",
+            taille: 12,
+        }, {
+            name: "Animaux animés",
+            path: "url('./images/ressources1/animauxAnimes/",
+            format: ".webp')",
+            taille: 16
+        },
+        {
+            name: "Dinos",
+            path: "url('./images/ressources1/dinosauresAvecNom/",
+            format: ".jpg')",
+            taille: 20
+        }
+    ];
+let indexOfMemory;
 function showAllCards() {
     let favMemSrc = arrayOfsrc[dataUser.favoriteMemory];
-    let indexOfMemory = dataUser.favoriteMemory;
+    indexOfMemory = dataUser.favoriteMemory;
     cards = document.querySelectorAll(".memoryCard");
     if (totalCards > favMemSrc.taille) {
         indexOfMemory = arrayOfsrc.findIndex((memory) => (memory.taille == totalCards))
@@ -89,14 +91,14 @@ function playgame() {
     nbShot = 0;
     cards.forEach(card => {
         card.style.backgroundImage = "url(./images/ressources1/question.svg";
- //       card.style.order = getRandom(totalCards - 1);
+        //       card.style.order = getRandom(totalCards - 1);
         card.addEventListener("click", clickCard);
         card.classList.remove("visible");
     });
     let h6 = document.querySelector("h6");
     h6.innerText = "Manche 1";
 
-    let h1Game = document.querySelector("h1");
+    let h1Game = document.querySelector("h4");
     h1Game.innerText = "Espace pour recommencer";
     /* Le style à appliquer pour toute les cartes au même endroit
         card.style.position = "absolute" ;
@@ -142,11 +144,11 @@ function clickCard(e) {
         let h6 = document.querySelector("h6");
         h6.innerText = "Manche " + Math.round(nbShot / 2);
         if (cardVisible == totalCards) {
-            let h1Game = document.querySelector("h1");
-            let score = nbShot / 2 ;
+            let h1Game = document.querySelector("h4");
+            let score = nbShot / 2;
             saveParty(score);
             h1Game.innerText = "Tu as gagné en " + score + " manches !";
-            updateUser(dataUser) ;
+            updateUser(dataUser);
         }
     }
 }
@@ -158,7 +160,7 @@ function makeVisible(cardNumber) {
     if (cardNumber > (totalCards / 2)) {
         imageNumber = imageNumber - (totalCards / 2)
     };
-    cards[cardNumber - 1].style.backgroundImage = arrayOfsrc[dataUser.favoriteMemory].path + imageNumber + arrayOfsrc[dataUser.favoriteMemory].format;
+    cards[cardNumber - 1].style.backgroundImage = arrayOfsrc[indexOfMemory].path + imageNumber + arrayOfsrc[indexOfMemory].format;
 };
 
 function makeInvisible(cardNumber) {
@@ -180,11 +182,11 @@ function makeBoardGame() {
     let totalColumn;
     let sizeCase;
     let boardGameSection = document.querySelector('.boardGame');
-    
+
     if (totalCards == 12) { sizeCase = 20; totalRow = 3; totalColumn = 4; };
     if (totalCards == 16) { sizeCase = 20; totalRow = 4; totalColumn = 4; };
     if (totalCards == 20) { sizeCase = 15; totalRow = 4; totalColumn = 5; };
-    
+
     boardGameSection.style.gridTemplateColumns = `repeat(${totalColumn}, ${sizeCase}vmin)`;
     boardGameSection.style.gridTemplateRows = `repeat(${totalRow}, ${sizeCase}vmin)`;
     for (let i = 1; i <= totalCards; i++) {
@@ -197,17 +199,35 @@ function makeBoardGame() {
 }
 
 function saveParty(totalPoint) {
-    console.log("score " + totalPoint ) ;
+    console.log("score " + totalPoint);
     let today = new Date();
-    let todayFormat = `${today.getDate()}/${today.getMonth()}/${today.getFullYear()}}` ;
+    let todayFormat = `${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`;
+    let memoryName = arrayOfsrc[dataUser.favoriteMemory].name;
+    let memorySize;
+    if (dataUser.favoriteSize == 12) memorySize = "4*3";
+    if (dataUser.favoriteSize == 16) memorySize = "4*4";
+    if (dataUser.favoriteSize == 20) memorySize = "5*4";
+
+
     let newScore = {
         pseudo: dataUser.name,
         score: totalPoint,
-        taille: dataUser.favoriteSize,
-        memory: dataUser.favoriteMemory,
+        taille: memorySize,
+        memory: memoryName,
         date: todayFormat
     };
-    dataUser.score.push(newScore) ; 
+    dataUser.score.push(newScore);
+
+    let allScoresJSON = localStorage.getItem("allScores");
+    let allScores = JSON.parse(allScoresJSON);
+
+    if (allScoresJSON !== null) {
+        allScores.push(newScore);
+    }
+    else {
+        allScores = [newScore];
+    }
+    localStorage.setItem("allScores", JSON.stringify(allScores));
 }
 
 //CCOLLER=======================
@@ -216,11 +236,31 @@ function updateUser(dataUser) {
     let users = JSON.parse(usersJSON);
     let currentUser = dataUser;
     let currentUserIndex = users.findIndex(user => user.name === currentUser.name);
-        //Update change 
-        users[currentUserIndex] = currentUser;
-        localStorage.setItem("users", JSON.stringify(users));
+    //Update change 
+    users[currentUserIndex] = currentUser;
+    localStorage.setItem("users", JSON.stringify(users));
 
-        // replace cookie puis charge new User
-        let currentUserInJSON = JSON.stringify(currentUser);
-        document.cookie = `currentUser=${currentUserInJSON}`;
+    // replace cookie puis charge new User
+    let currentUserInJSON = JSON.stringify(currentUser);
+    document.cookie = `currentUser=${currentUserInJSON}`;
+}
+
+function showbestScores(){
+    let allScoresJSON = localStorage.getItem("allScores");
+    let scores = JSON.parse(allScoresJSON);
+
+    if (scores !== null && scores !== undefined ){
+        let scoreTable = document.querySelector("#scoreTable > tbody") ;
+        scores.forEach((score) => {
+            const NEWTR = document.createElement("tr") ;
+            Object.values(score).forEach(value => {
+                const NEWTD = document.createElement("td") ;
+                const NEWCONTENT = document.createTextNode(value);
+                NEWTD.appendChild(NEWCONTENT) ; 
+                NEWTR.appendChild(NEWTD) ;
+            }
+        )
+        scoreTable.appendChild(NEWTR) ;
+        })
+        }
 }
