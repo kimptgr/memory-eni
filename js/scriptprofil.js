@@ -96,8 +96,6 @@ function showScores(dataUser){
 //     date: "12/07/2024"
 // }];
 let scores = dataUser.score ;
-console.log(scores) ; 
-
     if (scores !== null && scores !== undefined ){
     let scoreTable = document.querySelector("#scoreTable > tbody") ;
     scores.forEach((score) => {

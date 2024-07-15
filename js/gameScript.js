@@ -9,12 +9,11 @@ var firstCardCliked;
 var dataUser;
 var pathImage;
 var totalCards = 0;
+var indexOfMemory;
 
 function init() {
-    // btnStart = document.querySelector(".btnStart") ;
-    // btnStart.addEventListener("click", playgame) ;
+    
     dataUser = getUser();
-    console.log(dataUser);
     if (dataUser === undefined)
         window.location.href = "./connexion.html";
     document.addEventListener("keydown", (e) => {
@@ -22,10 +21,16 @@ function init() {
             playgame();
         }
     });
-    totalCards = dataUser.favoriteSize;
-    makeBoardGame();
-    showAllCards();
-    showbestScores();
+
+    afficheSelect() ;
+    showGameBoard();
+    // btnStart = document.querySelector(".btnStart") ;
+    // btnStart.addEventListener("click", playgame) ;
+
+    let inputFavMem = document.getElementById("favoriteMemory");
+    inputFavMem.addEventListener("change", changeMemory);
+    let inputFavSize = document.getElementById("favoriteSize");
+    inputFavSize.addEventListener("change", changeSize);
 }
 
 function getUser() {
@@ -61,14 +66,13 @@ let arrayOfsrc =
             taille: 20
         }
     ];
-let indexOfMemory;
 function showAllCards() {
-    let favMemSrc = arrayOfsrc[dataUser.favoriteMemory];
-    indexOfMemory = dataUser.favoriteMemory;
+    // let favMemSrc = arrayOfsrc[dataUser.favoriteMemory];
+    // indexOfMemory = dataUser.favoriteMemory;
     cards = document.querySelectorAll(".memoryCard");
-    if (totalCards > favMemSrc.taille) {
-        indexOfMemory = arrayOfsrc.findIndex((memory) => (memory.taille == totalCards))
-    }
+    // if (totalCards > favMemSrc.taille) {
+    //     indexOfMemory = arrayOfsrc.findIndex((memory) => (memory.taille == totalCards))
+    // }
 
     cards.forEach((card, index) => {
         if (index < totalCards / 2) {
@@ -182,7 +186,11 @@ function makeBoardGame() {
     let totalColumn;
     let sizeCase;
     let boardGameSection = document.querySelector('.boardGame');
-
+    let memoryCard = document.querySelectorAll(".memoryCard") ;
+    if (memoryCard.length > 0){
+        memoryCard.forEach(card => card.remove()) ;
+    } ;
+    
     if (totalCards == 12) { sizeCase = 20; totalRow = 3; totalColumn = 4; };
     if (totalCards == 16) { sizeCase = 20; totalRow = 4; totalColumn = 4; };
     if (totalCards == 20) { sizeCase = 15; totalRow = 4; totalColumn = 5; };
@@ -263,4 +271,59 @@ function showbestScores(){
         scoreTable.appendChild(NEWTR) ;
         })
         }
+}
+
+function afficheSelect(){
+    totalCards = dataUser.favoriteSize;
+    indexOfMemory = dataUser.favoriteMemory ;
+    
+    let favMemSrc = arrayOfsrc[dataUser.favoriteMemory];
+    if (totalCards > favMemSrc.taille) {
+        indexOfMemory = arrayOfsrc.findIndex((memory) => (memory.taille == totalCards))
+    }
+    
+    let inputFavMem = document.getElementById("favoriteMemory");
+    for (let i = 0; i < inputFavMem.options.length; i++) {
+        if (inputFavMem.options[i].value == indexOfMemory) {
+            inputFavMem.options[i].selected = true;
+            break;
+        }
+    }
+
+    let inputFavSize = document.getElementById("favoriteSize");
+    for (let i = 0; i < inputFavSize.options.length; i++) {
+        if (inputFavSize.options[i].value == dataUser.favoriteSize) {
+            inputFavSize.options[i].selected = true;
+            break;
+        }
+    }
+}
+
+function showGameBoard(){
+    makeBoardGame();
+    showAllCards();
+    showbestScores();
+}
+
+function changeMemory(e){
+    indexOfMemory = e.target.value ;
+    // if (totalCards > arrayOfsrc[indexOfMemory].taille) {
+        totalCards = arrayOfsrc[indexOfMemory].taille
+    // }
+    let inputFavSize = document.getElementById("favoriteSize");
+    for (let i = 0; i < inputFavSize.options.length; i++) {
+        if (inputFavSize.options[i].value == arrayOfsrc[indexOfMemory].taille) {
+            inputFavSize.options[i].selected = true;
+            break;
+        }
+    }
+    showGameBoard() ;
+}
+
+function changeSize(e){
+    totalCards = e.target.value ;
+        if (totalCards > arrayOfsrc[indexOfMemory].taille) {
+            totalCards = arrayOfsrc[indexOfMemory].taille
+             }
+             showGameBoard() ;
 }
