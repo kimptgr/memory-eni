@@ -1,3 +1,5 @@
+import {hachPassword} from "./utils/cryptage.js" ;
+
 "use strict";
 window.onload = init ;
 
@@ -65,7 +67,7 @@ function verifyValidity(e){
     }
     break;
     case "pwd":
-        passwordToVerify = userInput.value ;
+        let passwordToVerify = userInput.value ;
         const MINUSCULE = /[a-z]/ ;
         const MAJUSCULE = /[A-Z]/ ;
         const CHIFFRE = /[0-9]/ ;
@@ -137,7 +139,7 @@ function invalidInput(id) {
     return false ;
 }
 
-function createAccount(e){
+async function createAccount(e){
     e.preventDefault() ;
     if (document.getElementById("notification")){
         document.getElementById("notification").remove() ;
@@ -156,12 +158,22 @@ function createAccount(e){
         msgInvalid.innerText = "Adresse mail déjà utilisée" ;
     }
     else if (userData.name != "" && userData.mail !== "" && userData.pwd !== ""
-     //   && userData.pwd === userData.confirm///////////////////////////////////////////////////////////////////////////////
+     //   && userData.pwd === userData.confirm ///////////////////////////////////////////////////////////////////////////////
     ){
-        window.location.href = "./game.html"
+        //window.location.href = "./game.html"
         const newContent = document.createTextNode(`Bienvenue ${userData.name}, have fun !`);
         NEW_P.appendChild(newContent);
-        saveUser(userData) ;
+
+        try {
+            userData.pwd = await hachPassword(userData.pwd);
+            console.log("dans try");
+            console.log("dans try" + userData.pwd);
+            saveUser(userData) ;
+        } catch (error) {
+            console.log("dans erreur du tryinscription");
+            console.log(error) ;
+        }
+        
     }
     else {
         const newContent = document.createTextNode(`Merci de remplir correctement le formulaire`);
@@ -172,21 +184,34 @@ function createAccount(e){
     NEWDIV.appendChild(NEW_P) ;
     btnInscription.insertAdjacentElement('beforebegin', NEWDIV);
 }
+// //######################A EXPORTER
+// async function  hachPassword(password){
+//     console.log("dans cryptage");
+//     var hashedPassword = await argon2.hash({
+//         pass: password,
+//         salt: 'kimemory',
+//         type: argon2.ArgonType.Argon2id,
+//     });
+//     console.log(hashedPassword.hashHex);
+//     return hashedPassword.hashHex;
+// };
+
+// //###################################
 
 //C/Coller dans profil
 function saveUser(userData) {
     let usersJSON = localStorage.getItem("users");
-    let users = JSON.parse(usersJSON) ;
+    let users = JSON.parse(usersJSON);
     if(users !== null) {
-      users.push(userData) ;
+      users.push(userData);
     }
     else {
-        users = [userData] ;
+        users = [userData];
     }
     localStorage.setItem("users", JSON.stringify(users));
     window.location.href = "./connexion.html" ;
-    // let currentUser = JSON.stringify(userData) ;
-    // document.cookie = `currentUser=${currentUser}` ;
+    let currentUser = JSON.stringify(userData) ;
+    document.cookie = `currentUser=${currentUser}` ;
 }
 
 

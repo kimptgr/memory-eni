@@ -1,3 +1,7 @@
+import {hachPassword} from "./utils/cryptage.js" ;
+
+"use-strict" ;
+
 var usersJSON = localStorage.getItem("users");
 var users = JSON.parse(usersJSON) ;
 
@@ -8,31 +12,39 @@ function init(){
     btnConnexion.addEventListener("click" , connect) ;
 }
 
-function connect(e){
+async function connect(e){
+    e.preventDefault();  
     let inputUserMail = document.getElementById("inputEmail").value;
     let inputUserPassword = document.getElementById("inputPassword").value;
 
 
     if (users !== null) {
         e.target.classList ;
-        users.forEach((user) => {
-            if(user["mail"] == inputUserMail && user["pwd"] == inputUserPassword){
-                e.target.classList.remove("is-invalid") ;
-                e.target.classList.add("is-valid") ;
-                alert(`Bienvenue !`) ; 
-                let currentUser = JSON.stringify(user) ;
-                document.cookie = `currentUser=${currentUser}` ;
-                window.location.href = "./game.html" ;
+        try {
+            let passwordHashed = await hachPassword(inputUserPassword);
+            users.forEach((user) => {
+                if(user["mail"] == inputUserMail && user["pwd"] == passwordHashed){
+                    e.target.classList.remove("is-invalid") ;
+                    e.target.classList.add("is-valid") ;
+                    alert(`Bienvenue !`) ; 
+                    let currentUser = JSON.stringify(user) ;
+                    document.cookie = `currentUser=${currentUser}` ;
+                    window.location.href = "./game.html" ;
+                }
+                else { // si faux donc
+                    e.preventDefault();             
+                    e.target.classList.remove("is-valid") ;
+                    e.target.classList.add("is-invalid") ;
+                }
+                getUser()
+                e.target.classList ;
             }
-            else { // si faux donc
-                e.preventDefault();             
-                e.target.classList.remove("is-valid") ;
-                e.target.classList.add("is-invalid") ;
-            }
-            getUser()
-            e.target.classList ;
+        )
+            
+        } catch (error) {
+            console.log(error) ;
         }
-    );}
+        ;}
 }
     
 function getUser() {
@@ -65,5 +77,6 @@ function getUser() {
         }
 
         // =============================TODO
-        // Manque l'affichage si mauvais utilisateur faux 
+        // Manque l'affichage si mauvais utilisateur faux
+        // Manque suppression mdp vérifié
     
