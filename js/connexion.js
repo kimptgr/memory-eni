@@ -1,82 +1,43 @@
-import {hachPassword} from "./utils/cryptage.js" ;
+import { hachPassword } from "./utils/cryptage.js";
+window.onload = init;
 
-"use-strict" ;
-
-var usersJSON = localStorage.getItem("users");
-var users = JSON.parse(usersJSON) ;
-
-window.onload = init ;
-
-function init(){
+function init() {
     let btnConnexion = document.getElementById("submit");
-    btnConnexion.addEventListener("click" , connect) ;
+    btnConnexion.addEventListener("click", connect);
 }
 
-async function connect(e){
-    e.preventDefault();  
+async function connect(e) {
+    e.preventDefault();
+    var usersJSON = localStorage.getItem("users");
+    var users = JSON.parse(usersJSON);
     let inputUserMail = document.getElementById("inputEmail").value;
     let inputUserPassword = document.getElementById("inputPassword").value;
 
 
     if (users !== null) {
-        e.target.classList ;
+        e.target.classList;
         try {
             let passwordHashed = await hachPassword(inputUserPassword);
-            users.forEach((user) => {
-                if(user["mail"] == inputUserMail && user["pwd"] == passwordHashed){
-                    e.target.classList.remove("is-invalid") ;
-                    e.target.classList.add("is-valid") ;
-                    alert(`Bienvenue !`) ; 
-                    let currentUser = JSON.stringify(user) ;
-                    document.cookie = `currentUser=${currentUser}` ;
-                    window.location.href = "./game.html" ;
+            users.every((user) => {
+                if (user["mail"] == inputUserMail && user["pwd"] == passwordHashed) {
+                    e.target.classList.remove("is-invalid");
+                    e.target.classList.add("is-valid");
+                    alert(`Bienvenue !`);
+                    let currentUser = JSON.stringify(user);
+                    document.cookie = `currentUser=${currentUser}`;
+                    window.location.href = "./game.html";
+                    return false;
                 }
-                else { // si faux donc
-                    e.preventDefault();             
-                    e.target.classList.remove("is-valid") ;
-                    e.target.classList.add("is-invalid") ;
+                else {
+                    e.preventDefault();
+                    e.target.classList.remove("is-valid");
+                    e.target.classList.add("is-invalid");
+                    return true;
                 }
-                getUser()
-                e.target.classList ;
             }
-        )
-            
+            )
         } catch (error) {
-            console.log(error) ;
-        }
-        ;}
-}
-    
-function getUser() {
-    if (document.cookie){
-        let dataInCookie = document.cookie ;
-        let tabCookie = dataInCookie.split("=");
-        let dataInJSON = tabCookie[1] ;
-        let data = JSON.parse(dataInJSON) ;
-        dataUser = data ;
-        window.location.href = "./game.html" ;
-        return dataUser}
-    else {
+            console.log(error);
+        };
     }
 }
-
-// c/coller dans profil
-        function checkIfUsed(key, value) {
-            let usersJSON = localStorage.getItem("users");
-            let users = JSON.parse(usersJSON) ;
-            let isUsed = false;
-            validInput("btnInscription");
-            if (users !== null) {
-            users.forEach(element => {
-                if(element[key] == value){
-                    isUsed = true ;
-                    invalidInput("btnInscription");
-                }
-            });}
-            return isUsed
-        }
-
-        // =============================TODO
-        // Manque l'affichage si mauvais utilisateur faux
-        // Manque suppression mdp vérifié
-    

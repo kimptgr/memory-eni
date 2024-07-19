@@ -1,4 +1,3 @@
-"use strict";
 import { getRandom } from "./utils/random.js";
 
 window.onload = init;
@@ -82,19 +81,6 @@ function showMemory() {
 };
 
 function showScores(dataUser){
-// .scores = [{
-//     pseudo: inputName, 
-//     score: 25,
-//     taille:"5*4",
-//     memory: "Dinos",
-//     date: "14/07/2024"
-// }, {
-//     pseudo: inputName, 
-//     score: 15,
-//     taille:"3*4",
-//     memory: "Légumes",
-//     date: "12/07/2024"
-// }];
 let scores = dataUser.score ;
 if (scores !== null && scores !== undefined) {
     let scoreTable = document.querySelector("#scoreTable > tbody") ;
@@ -104,7 +90,7 @@ if (scores !== null && scores !== undefined) {
         Object.keys(score).forEach(key => {
             if (key !== "dateheure") {
                 const NEWTD = document.createElement("td");
-                const NEWCONTENT = document.createTextNode(score[key]); // Récupérer la valeur associée à la clé
+                const NEWCONTENT = document.createTextNode(score[key]);
                 NEWTD.appendChild(NEWCONTENT);
                 NEWTR.appendChild(NEWTD);
             }
@@ -175,23 +161,6 @@ function saveNewData(e) {
         currentUser.favoriteMemory = inputFavMem;
         currentUser.favoriteSize = inputFavSize;
         currentUser.imgProfil = newPkmValue;
-
-        // //#################################POUR TESTER SHOWSCORE
-        // currentUser.scores = [{
-        //     pseudo: inputName, 
-        //     score: 25,
-        //     taille:"5*4",
-        //     memory: "Dinos",
-        //     date: "14/07/2024"
-        // }, {
-        //     pseudo: inputName, 
-        //     score: 15,
-        //     taille:"3*4",
-        //     memory: "Légumes",
-        //     date: "12/07/2024"
-        // }];
-
-        // //#######################################################
 
         //Update change 
         users[currentUserIndex] = currentUser;

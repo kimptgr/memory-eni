@@ -1,9 +1,7 @@
-"use-strict";
 import { getRandom } from './utils/random.js';
 
 window.onload = init;
 var cards;
-var btnStart;
 var nbShot;
 var firstCardCliked;
 var dataUser;
@@ -24,8 +22,6 @@ function init() {
 
     afficheSelect() ;
     showGameBoard();
-    // btnStart = document.querySelector(".btnStart") ;
-    // btnStart.addEventListener("click", playgame) ;
 
     let inputFavMem = document.getElementById("favoriteMemory");
     inputFavMem.addEventListener("change", changeMemory);
@@ -95,7 +91,7 @@ function playgame() {
     nbShot = 0;
     cards.forEach(card => {
         card.style.backgroundImage = "url(./images/ressources1/question.svg";
-        //       card.style.order = getRandom(totalCards - 1);
+        card.style.order = getRandom(totalCards - 1);
         card.addEventListener("click", clickCard);
         card.classList.remove("visible");
     });
