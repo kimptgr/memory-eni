@@ -1,4 +1,5 @@
 import { getRandom } from './utils/random.js';
+import { arrayOfsrc } from './utils/arraymemory.js';
 
 window.onload = init;
 var cards;
@@ -42,26 +43,26 @@ function getUser() {
     }
 }
 
-let arrayOfsrc =
-    [
-        {
-            name: "Légumes",
-            path: "url('./images/ressources1/memory-legume/",
-            format: ".svg')",
-            taille: 12,
-        }, {
-            name: "Animaux animés",
-            path: "url('./images/ressources1/animauxAnimes/",
-            format: ".webp')",
-            taille: 16
-        },
-        {
-            name: "Dinos",
-            path: "url('./images/ressources1/dinosauresAvecNom/",
-            format: ".jpg')",
-            taille: 20
-        }
-    ];
+// let arrayOfsrc =
+//     [
+//         {
+//             name: "Légumes",
+//             path: "url('./images/ressources1/memory-legume/",
+//             format: ".svg')",
+//             taille: 12,
+//         }, {
+//             name: "Animaux animés",
+//             path: "url('./images/ressources1/animauxAnimes/",
+//             format: ".webp')",
+//             taille: 16
+//         },
+//         {
+//             name: "Dinos",
+//             path: "url('./images/ressources1/dinosauresAvecNom/",
+//             format: ".jpg')",
+//             taille: 20
+//         }
+//     ];
 function showAllCards() {
     // let favMemSrc = arrayOfsrc[dataUser.favoriteMemory];
     // indexOfMemory = dataUser.favoriteMemory;
@@ -190,6 +191,9 @@ function makeBoardGame() {
     if (totalCards == 12) { sizeCase = 20; totalRow = 3; totalColumn = 4; };
     if (totalCards == 16) { sizeCase = 20; totalRow = 4; totalColumn = 4; };
     if (totalCards == 20) { sizeCase = 15; totalRow = 4; totalColumn = 5; };
+    if (totalCards == 46) { sizeCase = 10; totalRow = 6; totalColumn = 8; };
+    if (totalCards == 52) { sizeCase = 10; totalRow = 6; totalColumn = 9; };
+    if (totalCards == 56) { sizeCase = 10; totalRow = 7; totalColumn = 8; };
 
     boardGameSection.style.gridTemplateColumns = `repeat(${totalColumn}, ${sizeCase}vmin)`;
     boardGameSection.style.gridTemplateRows = `repeat(${totalRow}, ${sizeCase}vmin)`;
