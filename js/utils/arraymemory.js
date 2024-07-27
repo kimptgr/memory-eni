@@ -4,7 +4,7 @@ export let arrayOfsrc =
             name: "Alphabet type scrabble",
             path: "url('./images/ressources1/alphabet-scrabble/",
             format: ".png')",
-            detailsImagesMemory: "./images/ressources1/memory-legume/memory_detail_scrabble.png",
+            detailsImagesMemory: "./images/ressources1/alphabet-scrabble/memory_detail_scrabble.png",
             taille: 52,
         },
         {
@@ -12,13 +12,13 @@ export let arrayOfsrc =
             path: "url('./images/ressources1/animaux/",
             format: ".webp')",
             detailsImagesMemory: "./images/ressources1/animaux/memory_detail_animaux.png",
-            taille: 56
+            taille: 54
         },
         {
             name: "Animaux animés",
             path: "url('./images/ressources1/animauxAnimes/",
             format: ".webp')",
-            detailsImagesMemory: "./images/ressources1/animauxAnimes/memory_detail_animaux_animes.png.png",
+            detailsImagesMemory: "./images/ressources1/animauxAnimes/memory_detail_animaux_animes.png",
             taille: 16
         },
         {

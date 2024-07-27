@@ -6,6 +6,9 @@ html, body {
 /* =======index ============================================= */
 
 /* =======Inscription======================================== */
+#favoriteSize option {
+    font-style: italic;
+}
 #pswForce{
     position: relative;
 }

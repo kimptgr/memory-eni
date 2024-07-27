@@ -1,4 +1,5 @@
 import { getRandom } from "./utils/random.js";
+import { arrayOfsrc } from './utils/arraymemory.js';
 
 window.onload = init;
 var dataUser;
@@ -77,7 +78,7 @@ function showMemory() {
     let arrayOfmemoImgSrc = ["./images/ressources1/memory-legume/memory_detail.png", "./images/ressources1/animauxAnimes/memory_detail_animaux_animes.png", "./images/ressources1/dinosauresAvecNom/memory_details_dinosaures_avec_nom.png"];
     let memorImg = document.getElementById("memorImg");
     let selectFavoriteMemory = document.getElementById("favoriteMemory")
-    memorImg.src = `${arrayOfmemoImgSrc[selectFavoriteMemory.value]}`;
+    memorImg.src = `${arrayOfsrc[selectFavoriteMemory.value].detailsImagesMemory}`;
 };
 
 function showScores(dataUser){
