@@ -2,12 +2,11 @@ import { getRandom } from "./utils/random.js";
 import { arrayOfsrc } from './utils/arraymemory.js';
 
 window.onload = init;
-var dataUser;
+var dataUser = getUser();
 var newPkmValue ;
 
 function init() {
     dataUser = getUser();
-    console.log(dataUser === void 0) ;
     if (dataUser === undefined) {window.location.href = "./inscription.html";}
     showUser(dataUser);
     showScores(dataUser);
