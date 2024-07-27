@@ -1,4 +1,5 @@
 import { getRandom } from './utils/random.js';
+import { arrayOfsrc } from './utils/arraymemory.js';
 
 window.onload = init;
 var cards;
@@ -42,26 +43,26 @@ function getUser() {
     }
 }
 
-let arrayOfsrc =
-    [
-        {
-            name: "Légumes",
-            path: "url('./images/ressources1/memory-legume/",
-            format: ".svg')",
-            taille: 12,
-        }, {
-            name: "Animaux animés",
-            path: "url('./images/ressources1/animauxAnimes/",
-            format: ".webp')",
-            taille: 16
-        },
-        {
-            name: "Dinos",
-            path: "url('./images/ressources1/dinosauresAvecNom/",
-            format: ".jpg')",
-            taille: 20
-        }
-    ];
+// let arrayOfsrc =
+//     [
+//         {
+//             name: "Légumes",
+//             path: "url('./images/ressources1/memory-legume/",
+//             format: ".svg')",
+//             taille: 12,
+//         }, {
+//             name: "Animaux animés",
+//             path: "url('./images/ressources1/animauxAnimes/",
+//             format: ".webp')",
+//             taille: 16
+//         },
+//         {
+//             name: "Dinos",
+//             path: "url('./images/ressources1/dinosauresAvecNom/",
+//             format: ".jpg')",
+//             taille: 20
+//         }
+//     ];
 function showAllCards() {
     // let favMemSrc = arrayOfsrc[dataUser.favoriteMemory];
     // indexOfMemory = dataUser.favoriteMemory;
@@ -190,6 +191,9 @@ function makeBoardGame() {
     if (totalCards == 12) { sizeCase = 20; totalRow = 3; totalColumn = 4; };
     if (totalCards == 16) { sizeCase = 20; totalRow = 4; totalColumn = 4; };
     if (totalCards == 20) { sizeCase = 15; totalRow = 4; totalColumn = 5; };
+    if (totalCards == 46) { sizeCase = 15; totalRow = 4; totalColumn = 12; };
+    if (totalCards == 52) { sizeCase = 15; totalRow = 4; totalColumn = 13; };
+    if (totalCards == 54) { sizeCase = 15; totalRow = 6; totalColumn = 9; };
 
     boardGameSection.style.gridTemplateColumns = `repeat(${totalColumn}, ${sizeCase}vmin)`;
     boardGameSection.style.gridTemplateRows = `repeat(${totalRow}, ${sizeCase}vmin)`;
@@ -207,10 +211,11 @@ function saveParty(totalPoint) {
     let today = new Date();
     let todayFormat = `${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`;
     let memoryName = arrayOfsrc[indexOfMemory].name;
-    let memorySize ;
-    if (totalCards == 12) memorySize = "4*3";
-    if (totalCards == 16) memorySize = "4*4";
-    if (totalCards == 20) memorySize = "5*4";
+    let memorySize = totalCards + " cartes";
+   // let memorySize ;
+   // if (totalCards == 12) memorySize = "4*3";
+   // if (totalCards == 16) memorySize = "4*4";
+   // if (totalCards == 20) memorySize = "5*4";
 
     let newScore = {
         pseudo: dataUser.name,
@@ -326,7 +331,7 @@ function showGameBoard(){
 function changeMemory(e){
     indexOfMemory = e.target.value ;
     // if (totalCards > arrayOfsrc[indexOfMemory].taille) {
-        totalCards = arrayOfsrc[indexOfMemory].taille
+        totalCards = arrayOfsrc[indexOfMemory].taille;
     // }
     let inputFavSize = document.getElementById("favoriteSize");
     for (let i = 0; i < inputFavSize.options.length; i++) {
@@ -335,6 +340,16 @@ function changeMemory(e){
             break;
         }
     }
+    //hide select options size 
+    let options = document.querySelectorAll("#favoriteSize option");
+    options.forEach(element => {
+        if (arrayOfsrc[indexOfMemory].taille >= element.value){
+            element.style.display = "block";
+        }else {
+            element.style.display = "none";
+        }
+    });
+
     showGameBoard() ;
 }
 

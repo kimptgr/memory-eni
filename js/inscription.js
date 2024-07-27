@@ -14,7 +14,7 @@ let userData = {
     name: "",
     mail: "",
     pwd: "",
-    favoriteMemory: 0,
+    favoriteMemory: 7,
     favoriteSize: 12,
     imgProfil: getRandom(300),
     score: []
