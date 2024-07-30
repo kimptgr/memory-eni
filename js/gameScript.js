@@ -21,6 +21,14 @@ function init() {
         }
     });
 
+    document.addEventListener("keydown", (e) => {
+        if (e.key == " ") {
+            playgame();
+        }
+    });
+
+    document.addEventListener("touchstart", playgame);
+
     afficheSelect() ;
     showGameBoard();
 
