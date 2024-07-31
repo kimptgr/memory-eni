@@ -27,7 +27,7 @@ function init() {
         }
     });
 
-    document.addEventListener("touchstart", playgame);
+    document.querySelector("h4").addEventListener("touchstart", playgame);
 
     afficheSelect() ;
     showGameBoard();
