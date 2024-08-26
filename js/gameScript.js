@@ -31,7 +31,7 @@ function init() {
         }
     });
 
-    //Pour pouvoir lancer le jeu sur mobile
+    //Play on mobile
     document.querySelector(".relaunch").addEventListener("click", playgame);
 
     afficheSelect() ;
