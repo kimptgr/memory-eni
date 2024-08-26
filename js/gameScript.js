@@ -14,7 +14,16 @@ function init() {
     
     dataUser = getUser();
     if (dataUser === undefined)
-        window.location.href = "./connexion.html";
+        dataUser = {
+            name: "Nomen nescio",
+            mail: "",
+            pwd: "",
+            favoriteMemory: 7,
+            favoriteSize: 12,
+            imgProfil: 778,
+            score: []
+        };
+        //window.location.href = "./connexion.html";
     document.addEventListener("keydown", (e) => {
         if (e.key == " ") {
             playgame();
@@ -155,8 +164,10 @@ function clickCard(e) {
         if (cardVisible == totalCards) {
             let h1Game = document.querySelector("h4");
             let score = nbShot / 2;
+            if (dataUser.name != "Nomen nescio")
             saveParty(score);
             h1Game.innerText = "Tu as gagné en " + score + " manches !";
+            if (dataUser.name != "Nomen nescio")
             updateUser(dataUser);
         }
     }
