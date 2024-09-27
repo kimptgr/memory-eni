@@ -1,8 +1,10 @@
 import { hachPassword } from "./utils/cryptage.js";
+import { connectionBtn } from "./utils/connectionBtn.js";
 
 window.onload = init;
 
 function init() {
+    connectionBtn();
     let inputs = document.querySelectorAll('input');
     inputs.forEach(input =>
         input.addEventListener("input", verifyValidity)

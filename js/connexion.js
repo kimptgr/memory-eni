@@ -1,9 +1,11 @@
 import { hachPassword } from "./utils/cryptage.js";
+import { connectionBtn } from "./utils/connectionBtn.js";
 window.onload = init;
 
 function init() {
     let btnConnexion = document.getElementById("submit");
     btnConnexion.addEventListener("click", connect);
+    connectionBtn();
 }
 
 async function connect(e) {

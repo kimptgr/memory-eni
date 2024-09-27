@@ -1,5 +1,6 @@
 import { getRandom } from './utils/random.js';
 import { arrayOfsrc } from './utils/arraymemory.js';
+import { connectionBtn } from "./utils/connectionBtn.js";
 
 window.onload = init;
 var cards;
@@ -11,7 +12,7 @@ var totalCards = 0;
 var indexOfMemory;
 
 function init() {
-    
+    connectionBtn();
     dataUser = getUser();
     if (dataUser === undefined)
         dataUser = {
@@ -30,6 +31,14 @@ function init() {
             playgame();
         }
     });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key == " ") {
+            playgame();
+        }
+    });
+
+   // document.querySelector("h4").addEventListener("touchstart", playgame);
 
     //Play on mobile
     document.querySelector(".relaunch").addEventListener("click", playgame);
