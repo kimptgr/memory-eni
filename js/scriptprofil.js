@@ -1,13 +1,17 @@
 import { getRandom } from "./utils/random.js";
 import { arrayOfsrc } from './utils/arraymemory.js';
+import { connectionBtn } from "./utils/connectionBtn.js";
 
 window.onload = init;
 var dataUser = getUser();
 var newPkmValue ;
 
 function init() {
+    connectionBtn();
     dataUser = getUser();
-    if (dataUser === undefined) {window.location.href = "./inscription.html";}
+    if (dataUser === undefined) {
+        window.location.href = "./inscription.html";
+    }
     showUser(dataUser);
     showScores(dataUser);
 

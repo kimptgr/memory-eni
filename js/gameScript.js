@@ -1,5 +1,6 @@
 import { getRandom } from './utils/random.js';
 import { arrayOfsrc } from './utils/arraymemory.js';
+import { connectionBtn } from "./utils/connectionBtn.js";
 
 window.onload = init;
 var cards;
@@ -11,7 +12,7 @@ var totalCards = 0;
 var indexOfMemory;
 
 function init() {
-    
+    connectionBtn();
     dataUser = getUser();
     if (dataUser === undefined)
         window.location.href = "./connexion.html";
