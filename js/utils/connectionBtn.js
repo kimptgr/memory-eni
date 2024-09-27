@@ -4,9 +4,8 @@ export function connectionBtn() {
     let connexion = document.getElementById("deconnexionLink");
     if (dataUser !== undefined) {
         connexion.innerText = "Déconnexion";
-        connexion.addEventListener("click", connectionBtn)
+        connexion.addEventListener("click", deconnexion)
     }
-    connexion.addEventListener("click", deconnexion);
 
     function deconnexion(){
     document.cookie = "currentUser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
