@@ -5,6 +5,7 @@ export function connectionBtn() {
     if (dataUser !== undefined) {
         connexion.innerText = "Déconnexion";
         connexion.addEventListener("click", deconnexion)
+        connexion.addEventListener("touchstart", deconnexion);
     }
 
     function deconnexion(){
