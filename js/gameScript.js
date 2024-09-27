@@ -15,8 +15,18 @@ function init() {
     connectionBtn();
     dataUser = getUser();
     if (dataUser === undefined)
-        window.location.href = "./connexion.html";
-    document.addEventListener("keydown", (e) => {
+        dataUser = {
+            name: "Nomen nescio",
+            mail: "",
+            pwd: "",
+            favoriteMemory: 7,
+            favoriteSize: 12,
+            imgProfil: 778,
+            score: []
+        };
+        //-------------Permet de forcer l'inscription pour accéder au jeu
+        //window.location.href = "./connexion.html";
+    document.addEventListener("keyup", (e) => {
         if (e.key == " ") {
             playgame();
         }
@@ -28,7 +38,10 @@ function init() {
         }
     });
 
-    document.querySelector("h4").addEventListener("touchstart", playgame);
+   // document.querySelector("h4").addEventListener("touchstart", playgame);
+
+    //Play on mobile
+    document.querySelector(".relaunch").addEventListener("click", playgame);
 
     afficheSelect() ;
     showGameBoard();
@@ -52,33 +65,8 @@ function getUser() {
     }
 }
 
-// let arrayOfsrc =
-//     [
-//         {
-//             name: "Légumes",
-//             path: "url('./images/ressources1/memory-legume/",
-//             format: ".svg')",
-//             taille: 12,
-//         }, {
-//             name: "Animaux animés",
-//             path: "url('./images/ressources1/animauxAnimes/",
-//             format: ".webp')",
-//             taille: 16
-//         },
-//         {
-//             name: "Dinos",
-//             path: "url('./images/ressources1/dinosauresAvecNom/",
-//             format: ".jpg')",
-//             taille: 20
-//         }
-//     ];
 function showAllCards() {
-    // let favMemSrc = arrayOfsrc[dataUser.favoriteMemory];
-    // indexOfMemory = dataUser.favoriteMemory;
     cards = document.querySelectorAll(".memoryCard");
-    // if (totalCards > favMemSrc.taille) {
-    //     indexOfMemory = arrayOfsrc.findIndex((memory) => (memory.taille == totalCards))
-    // }
 
     cards.forEach((card, index) => {
         if (index < totalCards / 2) {
@@ -91,8 +79,6 @@ function showAllCards() {
         }
     })
 }
-
-let h1Game = document.querySelector("h1");
 
 let cardVisible = 0;
 
@@ -108,8 +94,8 @@ function playgame() {
     let h6 = document.querySelector("h6");
     h6.innerText = "Manche 1";
 
-    let h1Game = document.querySelector("h4");
-    h1Game.innerText = "Espace pour recommencer";
+    let h4Game = document.querySelector("h4");
+    h4Game.innerText = "Clique ici ou barre espace pour recommencer";
     /* Le style à appliquer pour toute les cartes au même endroit
         card.style.position = "absolute" ;
         card.style.top = "0" ;
@@ -128,7 +114,8 @@ function clickCard(e) {
         alert("Tu as déjà retourné cette carte, choisis en une autre.")
     }
     else {
-        if (nbShot % 2 === 0) { // première de la paire
+        // First card
+        if (nbShot % 2 === 0) { 
             clearTimeout(timeoutID1);
             clearTimeout(timeoutID2);
             makeInvisible(card1);
@@ -137,7 +124,8 @@ function clickCard(e) {
             firstCardCliked = cardNumber;
             card1 = firstCardCliked;
         }
-        else { // 2eme
+        // Second card
+        else { 
             makeVisible(cardNumber);
             card2 = cardNumber;
             if ((cardNumber == (firstCardCliked - (totalCards / 2))) || (firstCardCliked == (cardNumber - (totalCards / 2)))) { // paire ok
@@ -156,8 +144,10 @@ function clickCard(e) {
         if (cardVisible == totalCards) {
             let h1Game = document.querySelector("h4");
             let score = nbShot / 2;
+            if (dataUser.name != "Nomen nescio")
             saveParty(score);
             h1Game.innerText = "Tu as gagné en " + score + " manches !";
+            if (dataUser.name != "Nomen nescio")
             updateUser(dataUser);
         }
     }
@@ -221,10 +211,6 @@ function saveParty(totalPoint) {
     let todayFormat = `${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`;
     let memoryName = arrayOfsrc[indexOfMemory].name;
     let memorySize = totalCards + " cartes";
-   // let memorySize ;
-   // if (totalCards == 12) memorySize = "4*3";
-   // if (totalCards == 16) memorySize = "4*4";
-   // if (totalCards == 20) memorySize = "5*4";
 
     let newScore = {
         pseudo: dataUser.name,
@@ -339,9 +325,8 @@ function showGameBoard(){
 
 function changeMemory(e){
     indexOfMemory = e.target.value ;
-    // if (totalCards > arrayOfsrc[indexOfMemory].taille) {
         totalCards = arrayOfsrc[indexOfMemory].taille;
-    // }
+
     let inputFavSize = document.getElementById("favoriteSize");
     for (let i = 0; i < inputFavSize.options.length; i++) {
         if (inputFavSize.options[i].value == arrayOfsrc[indexOfMemory].taille) {
